@@ -91,6 +91,7 @@ const skills = [
 const AboutPage = () => {
   return (
     <Layout pageTitle="About Me">
+      <div className={styles.page}>
       {/* Bio Section */}
       <section className={styles.section} aria-labelledby="bio-heading">
         <h2 id="bio-heading" className={styles.srOnly}>About</h2>
@@ -201,6 +202,7 @@ const AboutPage = () => {
           </a>
         </div>
       </section>
+      </div>
     </Layout>
   )
 }
