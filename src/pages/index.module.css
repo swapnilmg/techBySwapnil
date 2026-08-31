@@ -1,0 +1,73 @@
+.intro {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 3rem;
+}
+
+.intro a {
+  color: #663399;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.intro a:hover {
+  text-decoration: underline;
+}
+
+.sectionHeading {
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid #f5f1fb;
+}
+
+.postList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+
+.postItem {
+  margin-bottom: 2rem;
+}
+
+.postItem:last-child {
+  margin-bottom: 0;
+}
+
+.postTitle {
+  margin: 0 0 0.25rem;
+  font-size: 1.15rem;
+}
+
+.postTitle a {
+  color: #222;
+  text-decoration: none;
+}
+
+.postTitle a:hover {
+  color: #663399;
+  text-decoration: underline;
+}
+
+.postMeta {
+  color: #666;
+  font-size: 0.85rem;
+  margin: 0 0 0.5rem;
+}
+
+.postExcerpt {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.viewAll {
+  display: inline-block;
+  color: #663399;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.viewAll:hover {
+  text-decoration: underline;
+}

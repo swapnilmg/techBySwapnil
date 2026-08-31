@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { graphql } from 'gatsby'
 import Layout from '../components/layout'
 import Seo from '../components/seo'
 import * as styles from './about.module.css'
@@ -66,6 +67,37 @@ const publications = [
     date: "May 2017",
     url: "https://davidanastasiu.net/pdf/papers/2017-GaikwadA-SCI-los.pdf",
     description: "Communication is paramount during emergencies. This research proposes a framework for identifying optimal placement of wireless network antennas within a city, given multiple criteria constraints."
+  },
+  {
+    title: "Agentic AI for Autonomous Decision Systems",
+    venue: "CISCom 2026 (Second International Conference on Computational Intelligence and Soft Computing), Track 15, Paper ID 37",
+    date: null,
+    status: "In Press",
+    url: null,
+    description: "Co-authored with Rajkumar Kuppuswami (primary), Swapnil Gaikwad, and others. Camera-ready version in progress."
+  }
+]
+
+const conferenceReviewing = [
+  { org: "IEEE COMPSIF 2027", role: "Reviewer, Cyber Resilience for Sustainability track" },
+  { org: "International Conference on Technology, Engineering, and Management for Societal Impact", role: "Reviewer" },
+  { org: "ariia.in", role: "Reviewer" },
+  { org: "ICACT 2026 (3rd International Conference on Advanced Computing Technologies)", role: "Reviewer (applied)" },
+  { org: "ACM Peer Reviewer Certification", role: "Completed all 6 training modules" }
+]
+
+const bookReviewing = [
+  { org: "Apress", role: "Technical Reviewer" },
+  { org: "Manning Publications", role: "Manuscript Reviewer" },
+  { org: "BPB Publications", role: "Book Reviewer" },
+  { org: "IEEE Professional Communication Society", role: "Book Reviewer" }
+]
+
+const speaking = [
+  {
+    org: "Columbus AI Week",
+    role: "Speaker (applied)",
+    detail: "“From Months to Weeks: Building GenAI Agents for Enterprise Onboarding”"
   }
 ]
 
@@ -88,7 +120,8 @@ const skills = [
   }
 ]
 
-const AboutPage = () => {
+const AboutPage = ({ data }) => {
+  const writingPosts = data.allDevToArticle.nodes
   return (
     <Layout pageTitle="About Me">
       <div className={styles.page}>
@@ -148,17 +181,26 @@ const AboutPage = () => {
         <h2 id="publications-heading">Publications</h2>
         {publications.map((publication, index) => (
           <div key={index} className={styles.publicationItem}>
-            <a 
-              href={publication.url} 
-              className={styles.publicationTitle}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${publication.title} (opens in new tab)`}
-            >
-              {publication.title}
-            </a>
+            <div className={styles.publicationTitleRow}>
+              {publication.url ? (
+                <a
+                  href={publication.url}
+                  className={styles.publicationTitle}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${publication.title} (opens in new tab)`}
+                >
+                  {publication.title}
+                </a>
+              ) : (
+                <span className={styles.publicationTitle}>{publication.title}</span>
+              )}
+              {publication.status && (
+                <span className={styles.statusBadge}>{publication.status}</span>
+              )}
+            </div>
             <div className={styles.publicationMeta}>
-              {publication.venue} • {publication.date}
+              {publication.venue}{publication.date ? ` • ${publication.date}` : ''}
             </div>
             <p className={styles.publicationDescription}>
               {publication.description}
@@ -166,6 +208,77 @@ const AboutPage = () => {
           </div>
         ))}
       </section>
+
+      {/* Peer Review & Judging Section */}
+      <section className={styles.section} aria-labelledby="peer-review-heading">
+        <h2 id="peer-review-heading">Peer Review & Judging</h2>
+
+        <h3 className={styles.subheading}>Conference & Journal Reviewing</h3>
+        <ul className={styles.credentialList}>
+          {conferenceReviewing.map((item, index) => (
+            <li key={index} className={styles.credentialItem}>
+              <span className={styles.credentialOrg}>{item.org}</span>
+              <span className={styles.credentialRole}> — {item.role}</span>
+            </li>
+          ))}
+        </ul>
+
+        <h3 className={styles.subheading}>Technical Book Reviewing</h3>
+        <ul className={styles.credentialList}>
+          {bookReviewing.map((item, index) => (
+            <li key={index} className={styles.credentialItem}>
+              <span className={styles.credentialOrg}>{item.org}</span>
+              <span className={styles.credentialRole}> — {item.role}</span>
+            </li>
+          ))}
+        </ul>
+
+        <h3 className={styles.subheading}>Speaking</h3>
+        <ul className={styles.credentialList}>
+          {speaking.map((item, index) => (
+            <li key={index} className={styles.credentialItem}>
+              <span className={styles.credentialOrg}>{item.org}</span>
+              <span className={styles.credentialRole}> — {item.role}</span>
+              {item.detail && <div className={styles.credentialDetail}>{item.detail}</div>}
+            </li>
+          ))}
+        </ul>
+
+        <p className={styles.reviewCta}>
+          Looking for a technical reviewer, hackathon judge, or conference speaker?{' '}
+          <a href="#connect">Get in touch →</a>
+        </p>
+      </section>
+
+      {/* Writing Section */}
+      {writingPosts.length > 0 && (
+        <section className={styles.section} aria-labelledby="writing-heading">
+          <h2 id="writing-heading">Writing</h2>
+          <ul className={styles.writingList}>
+            {writingPosts.map(post => (
+              <li key={post.id} className={styles.writingItem}>
+                <a
+                  href={post.url}
+                  className={styles.writingTitle}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${post.title} (opens in new tab on Dev.to)`}
+                >
+                  {post.title}
+                </a>
+                <div className={styles.publicationMeta}>{post.publishedAt}</div>
+                {post.tags.length > 0 && (
+                  <div className={styles.writingTags}>
+                    {post.tags.map(tag => (
+                      <span key={tag} className={styles.writingTag}>#{tag}</span>
+                    ))}
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* Skills Section */}
       <section className={styles.section} aria-labelledby="skills-heading">
@@ -185,7 +298,7 @@ const AboutPage = () => {
       </section>
 
       {/* Contact Section */}
-      <section className={styles.section} aria-labelledby="connect-heading">
+      <section id="connect" className={styles.section} aria-labelledby="connect-heading">
         <h2 id="connect-heading">Connect</h2>
         <div className={styles.contactLinks}>
           <a 
@@ -207,9 +320,23 @@ const AboutPage = () => {
   )
 }
 
+export const query = graphql`
+  query {
+    allDevToArticle(sort: { publishedAt: DESC }, limit: 6) {
+      nodes {
+        id
+        title
+        url
+        publishedAt(formatString: "MMMM D, YYYY")
+        tags
+      }
+    }
+  }
+`
+
 export const Head = () => (
-  <Seo 
-    title="About Me" 
+  <Seo
+    title="About Me"
     description="Learn about Swapnil Gaikwad, Senior Software Engineer at Amazon. Technical leader specializing in distributed systems architecture, cross-team leadership, and building scalable cloud-native solutions that serve millions globally."
   />
 )
