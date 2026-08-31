@@ -82,7 +82,6 @@ const conferenceReviewing = [
   { org: "IEEE COMPSIF 2027", role: "Reviewer, Cyber Resilience for Sustainability track" },
   { org: "International Conference on Technology, Engineering, and Management for Societal Impact", role: "Reviewer" },
   { org: "ariia.in", role: "Reviewer" },
-  { org: "ICACT 2026 (3rd International Conference on Advanced Computing Technologies)", role: "Reviewer (applied)" },
   { org: "ACM Peer Reviewer Certification", role: "Completed all 6 training modules" }
 ]
 
@@ -91,14 +90,6 @@ const bookReviewing = [
   { org: "Manning Publications", role: "Manuscript Reviewer" },
   { org: "BPB Publications", role: "Book Reviewer" },
   { org: "IEEE Professional Communication Society", role: "Book Reviewer" }
-]
-
-const speaking = [
-  {
-    org: "Columbus AI Week",
-    role: "Speaker (applied)",
-    detail: "“From Months to Weeks: Building GenAI Agents for Enterprise Onboarding”"
-  }
 ]
 
 const skills = [
@@ -124,7 +115,7 @@ const AboutPage = ({ data }) => {
   const writingPosts = data.allDevToArticle.nodes
   return (
     <Layout pageTitle="About Me">
-      <div className={styles.page}>
+      <>
       {/* Bio Section */}
       <section className={styles.section} aria-labelledby="bio-heading">
         <h2 id="bio-heading" className={styles.srOnly}>About</h2>
@@ -233,17 +224,6 @@ const AboutPage = ({ data }) => {
           ))}
         </ul>
 
-        <h3 className={styles.subheading}>Speaking</h3>
-        <ul className={styles.credentialList}>
-          {speaking.map((item, index) => (
-            <li key={index} className={styles.credentialItem}>
-              <span className={styles.credentialOrg}>{item.org}</span>
-              <span className={styles.credentialRole}> — {item.role}</span>
-              {item.detail && <div className={styles.credentialDetail}>{item.detail}</div>}
-            </li>
-          ))}
-        </ul>
-
         <p className={styles.reviewCta}>
           Looking for a technical reviewer, hackathon judge, or conference speaker?{' '}
           <a href="#connect">Get in touch →</a>
@@ -315,7 +295,7 @@ const AboutPage = ({ data }) => {
           </a>
         </div>
       </section>
-      </div>
+      </>
     </Layout>
   )
 }

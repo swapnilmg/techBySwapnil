@@ -1,11 +1,12 @@
 .intro {
   font-size: 1.1rem;
   line-height: 1.7;
+  color: var(--text);
   margin-bottom: 3rem;
 }
 
 .intro a {
-  color: #663399;
+  color: var(--accent);
   font-weight: 600;
   text-decoration: none;
 }
@@ -16,9 +17,10 @@
 
 .sectionHeading {
   font-size: 1.4rem;
+  color: var(--text);
   margin-bottom: 1.5rem;
   padding-bottom: 0.6rem;
-  border-bottom: 2px solid #f5f1fb;
+  border-bottom: 2px solid var(--border);
 }
 
 .postList {
@@ -41,29 +43,30 @@
 }
 
 .postTitle a {
-  color: #222;
+  color: var(--text);
   text-decoration: none;
 }
 
 .postTitle a:hover {
-  color: #663399;
+  color: var(--accent);
   text-decoration: underline;
 }
 
 .postMeta {
-  color: #666;
+  color: var(--text-muted);
   font-size: 0.85rem;
   margin: 0 0 0.5rem;
 }
 
 .postExcerpt {
   margin: 0;
+  color: var(--text);
   line-height: 1.6;
 }
 
 .viewAll {
   display: inline-block;
-  color: #663399;
+  color: var(--accent);
   font-weight: 600;
   text-decoration: none;
 }
