@@ -1,6 +1,6 @@
 .intro {
   max-width: var(--content-max-width);
-  margin: 0 0 2.5rem;
+  margin: 0 0 1.75rem;
   color: var(--text-muted);
   font-size: 1.05rem;
   line-height: 1.7;
@@ -8,7 +8,7 @@
 
 .conferenceList {
   display: grid;
-  gap: 1.75rem;
+  gap: 1.25rem;
 }
 
 .conferenceCard {
@@ -19,31 +19,43 @@
 }
 
 .conferenceHeader {
-  padding: 2rem;
+  padding: 1.4rem 1.5rem 1.25rem;
 }
 
 .conferenceName {
   max-width: 850px;
   margin: 0;
   color: var(--text);
-  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-size: clamp(1.45rem, 2.2vw, 1.8rem);
   line-height: 1.25;
   letter-spacing: -0.025em;
 }
 
+.conferenceFullName {
+  max-width: 850px;
+  margin: 0.3rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
 .conferenceMeta {
-  margin: 0.75rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 1rem;
+  margin: 0.65rem 0 0;
   color: var(--accent);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 650;
   line-height: 1.5;
 }
 
 .conferenceDescription {
   max-width: 850px;
-  margin: 1.25rem 0 0;
+  margin: 0.85rem 0 0;
   color: var(--text-muted);
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 .conferenceLink,
@@ -55,10 +67,6 @@
   text-decoration: none;
 }
 
-.conferenceLink {
-  margin-top: 1.25rem;
-}
-
 .conferenceLink:hover,
 .roleLink:hover,
 .originalLink:hover {
@@ -67,57 +75,52 @@
 
 .roleList {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+  padding: 1rem 1.25rem 1.25rem;
   border-top: 1px solid var(--border);
 }
 
 .role {
-  padding: 1.5rem 2rem;
-}
-
-.role + .role {
-  border-top: 1px solid var(--border);
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
 }
 
 .roleTitle {
+  min-height: 2.8em;
   margin: 0;
   color: var(--text);
-  font-size: 1.15rem;
+  font-size: 1rem;
   line-height: 1.4;
 }
 
 .roleLink {
-  margin-top: 0.4rem;
-  font-size: 0.92rem;
+  align-self: flex-start;
+  margin-top: 0.25rem;
+  font-size: 0.82rem;
 }
 
-.mediaSections {
-  display: grid;
-  gap: 1.5rem;
-  margin-top: 1.25rem;
-}
-
-.mediaHeading {
-  margin: 0 0 0.75rem;
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.mediaGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 220px));
-  gap: 0.85rem;
+.roleMedia {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: auto;
+  padding-top: 0.9rem;
 }
 
 .thumbnailButton,
 .pdfCertificate {
   position: relative;
-  min-height: 120px;
+  display: block;
+  width: min(100%, 176px);
   padding: 0;
   overflow: hidden;
-  background: var(--bg);
+  background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: 8px;
   color: var(--text);
@@ -146,34 +149,39 @@
 .thumbnailImage {
   display: block;
   width: 100%;
-  height: 150px;
+  aspect-ratio: 800 / 562;
+  height: auto;
   object-fit: cover;
 }
 
-.thumbnailAction {
-  display: block;
-  padding: 0.65rem 0.75rem;
-  background: var(--bg);
-  color: var(--accent);
-  font-size: 0.82rem;
+.mediaBadge {
+  position: absolute;
+  right: 0.4rem;
+  bottom: 0.4rem;
+  padding: 0.18rem 0.4rem;
+  background: rgba(3, 6, 12, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 4px;
+  color: var(--text);
+  font-size: 0.68rem;
   font-weight: 700;
-  text-align: center;
-}
-
-.pdfCertificate {
-  display: flex;
-  flex-direction: column;
+  letter-spacing: 0.03em;
 }
 
 .pdfIcon {
   display: grid;
-  flex: 1;
-  min-height: 150px;
+  aspect-ratio: 800 / 562;
   place-items: center;
   color: var(--accent);
   font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: 0.08em;
+}
+
+@media (max-width: 900px) {
+  .roleList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .dialogBackdrop {
@@ -268,28 +276,44 @@
 
 @media (max-width: 600px) {
   .intro {
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.4rem;
     font-size: 1rem;
   }
 
   .conferenceHeader {
-    padding: 1.4rem;
+    padding: 1.2rem;
   }
 
   .conferenceName {
-    font-size: 1.35rem;
+    font-size: 1.4rem;
   }
 
   .conferenceMeta {
+    display: grid;
     font-size: 0.9rem;
   }
 
-  .role {
-    padding: 1.25rem 1.4rem;
+  .roleList {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 0.85rem;
   }
 
-  .mediaGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .role {
+    padding: 1rem;
+  }
+
+  .roleTitle {
+    min-height: 0;
+  }
+
+  .roleMedia {
+    margin-top: 0;
+  }
+
+  .thumbnailButton,
+  .pdfCertificate {
+    width: min(100%, 180px);
   }
 
   .dialogBackdrop {
