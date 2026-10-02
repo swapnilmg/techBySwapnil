@@ -9,8 +9,8 @@ const IndexPage = ({ data }) => {
     <Layout pageTitle="Notes on distributed systems, architecture, and scale">
       <p className={styles.intro}>
         I'm Swapnil Gaikwad, a Senior Software Development Engineer at Amazon.
-        I write about caching, databases, and the infrastructure that keeps
-        large-scale systems running. <Link to="/about">More about me →</Link>
+        I write about engineering judgment, code reviews, distributed systems,
+        and GenAI agents. <Link to="/about">More about me →</Link>
       </p>
 
       <section aria-labelledby="recent-posts-heading">
@@ -26,7 +26,9 @@ const IndexPage = ({ data }) => {
                 </Link>
               </h3>
               <p className={styles.postMeta}>{node.frontmatter.date}</p>
-              <p className={styles.postExcerpt}>{node.excerpt}</p>
+              <p className={styles.postExcerpt}>
+                {node.frontmatter.description || node.excerpt}
+              </p>
             </li>
           ))}
         </ul>
@@ -48,6 +50,7 @@ export const query = graphql`
           date(formatString: "MMMM D, YYYY")
           title
           slug
+          description
         }
       }
     }
@@ -57,7 +60,8 @@ export const query = graphql`
 export const Head = () => (
   <Seo
     title="Home"
-    description="Tech by Swapnil: notes on distributed systems, architecture, and scaling software, written by Swapnil Gaikwad."
+    description="Tech by Swapnil: notes on engineering judgment, code reviews, distributed systems, and GenAI agents, written by Swapnil Gaikwad."
+    canonical="/"
   />
 )
 
