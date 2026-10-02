@@ -1,0 +1,242 @@
+---
+title: "What Senior Engineers Actually Do During Code Reviews (It's Not Just Finding Bugs)"
+date: "2026-08-27"
+slug: "code-reviews-senior-engineers"
+description: "The best code review comment I have learned to leave is not 'This has a bug.' It is: 'Should this code exist here at all?'"
+tags: ["career", "codereview", "programming"]
+reading_time: 8
+hero_image: "./cover.png"
+hero_image_alt: "Illustration for an article about what senior engineers do during code reviews"
+canonical_url: "https://swapnilgaikwad.me/blog/code-reviews-senior-engineers/"
+original_url: "https://dev.to/swapnilmg/what-senior-engineers-actually-do-during-code-reviews-its-not-just-finding-bugs-eja"
+---
+
+The best code review comment I have learned to leave is not:
+
+> This has a bug.
+
+It is:
+
+> **Should this code exist here at all?**
+
+A change can be locally correct and systemically wrong. The code is clean. The tests pass. The author's reasoning makes sense. But the change puts a new responsibility in the wrong service, duplicates a rule owned elsewhere, or establishes a pattern the team will spend years undoing.
+
+Those changes are dangerous precisely because they look good in the diff.
+
+Finding them requires a different model of code review. The job is not only to ask whether the implementation works. It is to ask whether the implementation belongs.
+
+That is where experienced reviewers create the most leverage.
+
+<Callout>
+**The short version:** Code can be perfectly correct and still be the wrong change. The highest-leverage review comment is not "this has a bug" — it is "should this exist here at all?" That shift in framing is where senior-level review value actually comes from.
+</Callout>
+
+## Table Of Contents
+* [The bug-finding model is too small](#bug-finding-model)
+* [Correct code, wrong change](#correct-code-wrong-change)
+* [Four signals that deserve a pause](#four-signals)
+* [Review attention should follow risk](#review-attention)
+* [The right reviewer is the one with context](#right-reviewer)
+* [A three-pass review](#three-pass-review)
+* [Fewer comments, better decisions](#fewer-comments)
+
+<a id="bug-finding-model"></a>
+
+## The bug-finding model is too small
+Bug finding matters. But research suggests that it is an incomplete description of what code review delivers.
+
+In a large Microsoft study, Alberto Bacchelli and Christian Bird observed 17 developers across 16 teams, manually classified 570 review comments, and surveyed 165 managers and 873 developers and testers.
+
+[Finding defects was the top-ranked motivation](https://www.microsoft.com/en-us/research/publication/expectations-outcomes-and-challenges-of-modern-code-review/) for 44% of the developers surveyed. Yet only 14% of the comments in the researchers' sample were classified as defect-related. Code improvements, such as removing unnecessary code or improving readability, were the largest category at 29%.
+
+The measures are not identical, but the gap is useful: what teams say review is for and what review actually produces are not quite the same thing.
+
+A later Microsoft paper made the argument provocative enough to put it in the title: ["Code Reviews Do Not Find Bugs."](https://www.microsoft.com/en-us/research/publication/code-reviews-do-not-find-bugs-how-the-current-code-review-best-practice-slows-us-down/) Its actual claim was narrower than the headline. The authors reported that about 15% of review comments indicated a possible defect, while at least 50% concerned long-term maintainability.
+
+Google's experience points in the same direction. A 2018 case study combined 12 interviews, 44 survey responses, and logs from [9 million reviewed changes](https://research.google/pubs/modern-code-review-a-case-study-at-google/). The researchers concluded that review gave developers a place to teach one another, maintain the integrity of their codebases, and build norms around readability and consistency.
+
+> The research does not say "stop looking for bugs." It says bug finding is too small a model for the work review is already doing.
+
+The senior reviewer's job is to see the change as part of a system, a team, and a sequence of future decisions.
+
+<a id="correct-code-wrong-change"></a>
+
+## Correct code, wrong change
+Consider this composite scenario. The details are invented, but the pattern is common.
+
+A payment service processes a charge through four handlers:
+
+```text
+validate -> authorize -> capture -> settle
+```
+
+Each handler owns one stage. A change adds currency conversion to `authorize`. If a customer pays in EUR and the merchant settles in USD, the handler converts the amount before calling the payment processor.
+
+The implementation is tidy. It handles rounding. It has unit tests. The motivation sounds reasonable: authorize the amount in the currency that will eventually be settled.
+
+Reviewing only for correctness, this is easy to approve.
+
+But the settlement amount is already calculated by an upstream pricing component and included with the order. Recalculating it inside `authorize` creates three system-level problems:
+
+1. **Hidden coupling.** The payment path now depends on an exchange-rate source it previously did not need.
+2. **Duplicated policy.** Rounding and rate-selection rules now exist in two places and can drift independently.
+3. **A bad precedent.** If `authorize` can change pricing, the next change can add fees, tax adjustments, or discounts. A handler with one responsibility slowly becomes a second pricing system.
+
+No syntax rule exposes those problems. More tests around the new conversion code do not solve them either. The implementation can be perfectly tested and still be the wrong implementation.
+
+The review comment should make that distinction clear:
+
+> The implementation looks solid, so my concern is not the conversion logic. It is ownership. The settlement amount is already calculated upstream and is available on the order. Recalculating it here couples the authorization path to exchange-rate policy and creates a second result that can drift from the invoiced amount. Can we consume the existing value instead and keep conversion with its current owner?
+
+That comment has four useful parts:
+
+- It separates implementation quality from architectural placement.
+- It identifies the existing owner of the responsibility.
+- It explains the consequence rather than appealing to taste.
+- It proposes a smaller path forward.
+
+The best outcome is deletion. No replacement abstraction. No new helper. The new handler logic simply does not need to exist.
+
+<a id="four-signals"></a>
+
+## Four signals that deserve a pause
+You do not need the whole architecture in your head to notice responsibility creep. Start with four signals.
+
+### 1. "While we're here" work
+
+A small change acquires a nearby cleanup, validation, cache, or optimization. Each addition may be reasonable on its own, but convenience is not an architectural reason.
+
+Ask: **Would we still choose to make this change here if it required its own proposal?**
+
+### 2. A new cross-boundary dependency
+
+A service begins calling another service from a path that did not call it before. A domain package imports an infrastructure client. A synchronous request now waits on a second network hop.
+
+Ask: **Which boundary changed, and who owns the new failure mode?**
+
+### 3. A rule that already exists elsewhere
+
+The diff validates, calculates, normalizes, or authorizes something that another component already decides.
+
+Ask: **Are we protecting against bad input, or creating a second source of truth?**
+
+### 4. A growing extension point
+
+Hooks, plugins, middleware, and callbacks are natural places to put "just one more thing." That flexibility is useful, but it can hide the gradual transfer of business responsibility into infrastructure.
+
+Ask: **If every future feature followed this pattern, what would this extension point own in a year?**
+
+These questions are not requests for theoretical purity. They are ways to expose future cost while the cheapest fix is still deleting a few lines.
+
+<a id="review-attention"></a>
+
+## Review attention should follow risk
+Not every change deserves the same level of scrutiny. Spending twenty minutes debating a private helper while skimming a schema migration is not thoroughness. It is poor allocation of attention.
+
+I use three factors to decide how slowly to review:
+
+- **Blast radius:** How many customers, requests, records, or teams are affected if this is wrong?
+- **Reversibility:** Can we roll it back cleanly, or will it leave persisted data, public contracts, or external side effects behind?
+- **Novelty:** Is this a familiar implementation in a familiar path, or a new pattern crossing an unfamiliar boundary?
+
+This is not a numerical formula, but the heuristic is useful:
+
+```text
+review attention ~= blast radius x irreversibility x novelty
+```
+
+A copy change behind a feature flag is narrow and reversible. Review it, then move on.
+
+A new retry policy in a shared client deserves more thought. It can amplify traffic and alter latency across every caller.
+
+An authorization change, irreversible data migration, or public API contract deserves a slower review, explicit failure scenarios, and someone who understands the affected domain.
+
+Seniority in review is not demonstrated by finding something to say on every line. It is demonstrated by spending attention where a mistake would be expensive.
+
+<a id="right-reviewer"></a>
+
+## The right reviewer is the one with context
+The Microsoft study found that 91% of surveyed developers said unfamiliar files took longer to review. More importantly, 82% said reviewers familiar with the files gave different feedback: deeper, more conceptual, and more likely to identify subtle issues.
+
+That finding should change how teams assign reviews.
+
+The most senior available engineer is not automatically the best reviewer. A mid-level engineer who knows the subsystem, its invariants, and the last failed migration may provide more value than a distinguished engineer seeing the code for the first time.
+
+For risky changes, look for context in three forms:
+
+- Someone who knows the code being changed.
+- Someone who understands the upstream or downstream contract.
+- Someone who knows why the current boundary exists.
+
+One person may cover all three. Often they do not. The point is not to add reviewers mechanically. It is to make sure the decision has the context it requires.
+
+<a id="three-pass-review"></a>
+
+## A three-pass review
+Here is a practical workflow for the next change you review.
+
+### Pass 1: Intent and risk
+
+Before opening the diff, read the change description and answer:
+
+- What outcome is the author trying to create?
+- What is the likely blast radius?
+- Is the change easy to reverse?
+- Do the assigned reviewers have the necessary context?
+
+If you cannot explain the intent in one sentence, the review is not ready for line-by-line feedback.
+
+### Pass 2: Placement and precedent
+
+Now inspect the shape of the change:
+
+- Which component gains a new responsibility?
+- Which boundaries or dependencies change?
+- Does the same policy already exist elsewhere?
+- What future change will cite this one as precedent?
+
+This is the pass most likely to produce "should this exist here?"
+
+### Pass 3: Correctness and evidence
+
+Only then go deep on the implementation:
+
+- Do the code and tests match the stated intent?
+- What happens at failure boundaries?
+- Are important invariants encoded or merely assumed?
+- Does the test strategy match the blast radius?
+
+This order matters. There is little value in perfecting tests for code the system should not own.
+
+<a id="fewer-comments"></a>
+
+## Fewer comments, better decisions
+A strong review is not measured by comment count.
+
+Sometimes the right output is a detailed concern about ownership. Sometimes it is a question that brings in the person with missing context. Sometimes it is a quick approval because the change is low-risk, reversible, and aligned.
+
+The standard I try to apply is simple:
+
+> **A code review should make the system more coherent, not just the diff more correct.**
+
+Bug finding remains part of the job. It is simply not the ceiling.
+
+On your next review, ask one question before reading the implementation:
+
+> If this code is correct, could it still be the wrong change?
+
+That question will not produce more comments. It should produce better decisions.
+
+---
+
+Where does your team draw the line between reviewing implementation and reviewing architecture? What signals tell you that correct code is landing in the wrong place?
+
+## References
+
+- Alberto Bacchelli and Christian Bird. [*Expectations, Outcomes, and Challenges of Modern Code Review*](https://www.microsoft.com/en-us/research/publication/expectations-outcomes-and-challenges-of-modern-code-review/). ICSE, 2013.
+- Jacek Czerwonka, Michaela Greiler, and Jack Tilford. [*Code Reviews Do Not Find Bugs: How the Current Code Review Best Practice Slows Us Down*](https://www.microsoft.com/en-us/research/publication/code-reviews-do-not-find-bugs-how-the-current-code-review-best-practice-slows-us-down/). ICSE-SEIP, 2015.
+- Caitlin Sadowski, Emma Söderberg, Luke Church, Michal Sipko, and Alberto Bacchelli. [*Modern Code Review: A Case Study at Google*](https://research.google/pubs/modern-code-review-a-case-study-at-google/). ICSE-SEIP, 2018.
+
+---
+
+*Also published on [dev.to](https://dev.to/swapnilmg/what-senior-engineers-actually-do-during-code-reviews-its-not-just-finding-bugs-eja).*

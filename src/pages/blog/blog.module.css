@@ -37,7 +37,26 @@
 .postDate {
   color: var(--text-muted);
   font-size: 0.9rem;
+  margin: 0 0 0.9rem;
+}
+
+.tagList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
   margin: 0 0 1.5rem;
+}
+
+.tag {
+  background: var(--accent-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  padding: 0.2rem 0.6rem;
 }
 
 .heroImage {
