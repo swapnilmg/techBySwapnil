@@ -1,12 +1,13 @@
 // Put conference media in static/activities/<conference-id>/ and reference it
 // from the matching role. To add a conference, copy the object shape below and
 // add its roles. Photos use { src, alt, thumbnail? }; certificates use
-// { type: "image" | "pdf", src, alt, thumbnail? }. The ICIEEE certificate is at
-// static/activities/icieee-2026/technical-advisor-certificate.pdf, with its PNG
-// thumbnail beside it.
+// { type: "image" | "pdf", src, alt, thumbnail? }. The three ICIEEE role
+// certificates and their PNG thumbnails live together in
+// static/activities/icieee-2026/.
 const conferences = [
   {
     id: 'icieee-2026',
+    shortName: 'ICIEEE 2026',
     name:
       'International Conference on Innovations in Electronics and Electrical Engineering (ICIEEE-2026)',
     date: {
@@ -37,13 +38,27 @@ const conferences = [
         title: 'Session Chair (Virtual)',
         url: 'https://icieee.com/committee',
         photos: [],
-        certificates: []
+        certificates: [
+          {
+            type: 'pdf',
+            src: '/activities/icieee-2026/session-chair-certificate.pdf',
+            thumbnail: '/activities/icieee-2026/session-chair-certificate.png',
+            alt: 'ICIEEE 2026 Session Chair certificate of appreciation'
+          }
+        ]
       },
       {
         title: 'Invited Talk (Virtual)',
         url: 'https://icieee.com/committee',
         photos: [],
-        certificates: []
+        certificates: [
+          {
+            type: 'pdf',
+            src: '/activities/icieee-2026/invited-talk-certificate.pdf',
+            thumbnail: '/activities/icieee-2026/invited-talk-certificate.png',
+            alt: 'ICIEEE 2026 Invited Speaker certificate of appreciation'
+          }
+        ]
       }
     ]
   }

@@ -144,11 +144,13 @@ const ImageThumbnail = ({ media, label, onOpen }) => (
     <img
       className={styles.thumbnailImage}
       src={media.thumbnail || media.src}
-      alt={media.alt}
+      alt=""
       loading="lazy"
       decoding="async"
     />
-    <span className={styles.thumbnailAction}>Enlarge</span>
+    <span className={styles.mediaBadge} aria-hidden="true">
+      Enlarge
+    </span>
   </button>
 )
 
@@ -158,7 +160,7 @@ const PdfCertificate = ({ certificate }) => (
     href={certificate.src}
     target="_blank"
     rel="noopener noreferrer"
-    aria-label={`${certificate.alt} (PDF opens in a new tab)`}
+    aria-label={`Open ${certificate.alt} (PDF opens in a new tab)`}
   >
     {certificate.thumbnail ? (
       <img
@@ -173,11 +175,13 @@ const PdfCertificate = ({ certificate }) => (
         PDF
       </span>
     )}
-    <span className={styles.thumbnailAction}>Open PDF</span>
+    <span className={styles.mediaBadge} aria-hidden="true">
+      PDF ↗
+    </span>
   </a>
 )
 
-const RoleMedia = ({ conferenceId, role, roleIndex, onOpen }) => {
+const RoleMedia = ({ role, onOpen }) => {
   const photos = role.photos || []
   const certificates = role.certificates || []
 
@@ -185,51 +189,27 @@ const RoleMedia = ({ conferenceId, role, roleIndex, onOpen }) => {
     return null
   }
 
-  const sectionId = `${conferenceId}-role-${roleIndex}`
-
   return (
-    <div className={styles.mediaSections}>
-      {photos.length > 0 && (
-        <section aria-labelledby={`${sectionId}-photos`}>
-          <h4 id={`${sectionId}-photos`} className={styles.mediaHeading}>
-            Photos
-          </h4>
-          <div className={styles.mediaGrid}>
-            {photos.map(photo => (
-              <ImageThumbnail
-                key={photo.src}
-                media={photo}
-                label="Photo"
-                onOpen={onOpen}
-              />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {certificates.length > 0 && (
-        <section aria-labelledby={`${sectionId}-certificates`}>
-          <h4 id={`${sectionId}-certificates`} className={styles.mediaHeading}>
-            Certificates
-          </h4>
-          <div className={styles.mediaGrid}>
-            {certificates.map(certificate =>
-              certificate.type === 'pdf' ? (
-                <PdfCertificate
-                  key={certificate.src}
-                  certificate={certificate}
-                />
-              ) : (
-                <ImageThumbnail
-                  key={certificate.src}
-                  media={certificate}
-                  label="Certificate"
-                  onOpen={onOpen}
-                />
-              )
-            )}
-          </div>
-        </section>
+    <div className={styles.roleMedia}>
+      {photos.map(photo => (
+        <ImageThumbnail
+          key={photo.src}
+          media={photo}
+          label="Photo"
+          onOpen={onOpen}
+        />
+      ))}
+      {certificates.map(certificate =>
+        certificate.type === 'pdf' ? (
+          <PdfCertificate key={certificate.src} certificate={certificate} />
+        ) : (
+          <ImageThumbnail
+            key={certificate.src}
+            media={certificate}
+            label="Certificate"
+            onOpen={onOpen}
+          />
+        )
       )}
     </div>
   )
@@ -264,16 +244,40 @@ const ActivitiesPage = () => {
           return (
             <article key={conference.id} className={styles.conferenceCard}>
               <header className={styles.conferenceHeader}>
-                <h2 className={styles.conferenceName}>{conference.name}</h2>
+                <h2 className={styles.conferenceName}>
+                  {conference.shortName || conference.name}
+                </h2>
+                {conference.shortName && (
+                  <p className={styles.conferenceFullName}>
+                    {conference.name}
+                  </p>
+                )}
                 {meta.length > 0 && (
-                  <p className={styles.conferenceMeta}>{meta.join(' · ')}</p>
+                  <p className={styles.conferenceMeta}>
+                    <span>{meta.join(' · ')}</span>
+                    {conference.url && (
+                      <a
+                        className={styles.conferenceLink}
+                        href={conference.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Conference website
+                        <span aria-hidden="true"> ↗</span>
+                        <span className={styles.srOnly}>
+                          {' '}
+                          (opens in a new tab)
+                        </span>
+                      </a>
+                    )}
+                  </p>
                 )}
                 {conference.description && (
                   <p className={styles.conferenceDescription}>
                     {conference.description}
                   </p>
                 )}
-                {conference.url && (
+                {conference.url && meta.length === 0 && (
                   <a
                     className={styles.conferenceLink}
                     href={conference.url}
@@ -291,7 +295,7 @@ const ActivitiesPage = () => {
               </header>
 
               <div className={styles.roleList}>
-                {(conference.roles || []).map((role, roleIndex) => (
+                {(conference.roles || []).map(role => (
                   <section
                     key={`${conference.id}-${role.title}`}
                     className={styles.role}
@@ -304,7 +308,7 @@ const ActivitiesPage = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        View role listing
+                        View listing
                         <span aria-hidden="true"> ↗</span>
                         <span className={styles.srOnly}>
                           {' '}
@@ -312,12 +316,7 @@ const ActivitiesPage = () => {
                         </span>
                       </a>
                     )}
-                    <RoleMedia
-                      conferenceId={conference.id}
-                      role={role}
-                      roleIndex={roleIndex}
-                      onOpen={openMedia}
-                    />
+                    <RoleMedia role={role} onOpen={openMedia} />
                   </section>
                 ))}
               </div>
