@@ -62,6 +62,34 @@ const sortActivitiesNewestFirst = activityList =>
     })
     .map(({ activity }) => activity)
 
+const activityDomain = url => {
+  try {
+    return new URL(url).hostname
+  } catch (e) {
+    return null
+  }
+}
+
+const ActivityLogo = ({ url }) => {
+  const [failed, setFailed] = React.useState(false)
+  const domain = url && !failed ? activityDomain(url) : null
+
+  if (!domain) {
+    return null
+  }
+
+  return (
+    <img
+      className={styles.activityLogo}
+      src={`https://www.google.com/s2/favicons?sz=64&domain=${domain}`}
+      alt=""
+      aria-hidden="true"
+      loading="lazy"
+      onError={() => setFailed(true)}
+    />
+  )
+}
+
 const MediaDialog = ({ media, onClose, triggerRef }) => {
   const dialogRef = React.useRef(null)
   const closeButtonRef = React.useRef(null)
@@ -282,15 +310,18 @@ const ActivitiesPage = () => {
             <article key={activity.id} className={styles.activityCard}>
               <header className={styles.activityHeader}>
                 <span className={styles.typeLabel}>{typeLabel}</span>
-                <div className={styles.activityTitleLine}>
-                  <h2 className={styles.activityName}>
-                    {activity.shortName || activity.name}
-                  </h2>
-                  {!activity.shortName && activity.edition && (
-                    <span className={styles.activityEdition}>
-                      {activity.edition}
-                    </span>
-                  )}
+                <div className={styles.activityTitleRow}>
+                  <ActivityLogo url={activity.url} />
+                  <div className={styles.activityTitleLine}>
+                    <h2 className={styles.activityName}>
+                      {activity.shortName || activity.name}
+                    </h2>
+                    {!activity.shortName && activity.edition && (
+                      <span className={styles.activityEdition}>
+                        {activity.edition}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 {activity.shortName && (
                   <p className={styles.activityFullName}>{activity.name}</p>

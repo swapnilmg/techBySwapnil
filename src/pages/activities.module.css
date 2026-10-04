@@ -34,6 +34,23 @@
   text-transform: uppercase;
 }
 
+.activityTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.activityLogo {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px;
+  object-fit: contain;
+}
+
 .activityTitleLine {
   display: flex;
   flex-wrap: wrap;
