@@ -70,22 +70,24 @@ const activityDomain = url => {
   }
 }
 
-const ActivityLogo = ({ url }) => {
-  const [failed, setFailed] = React.useState(false)
-  const domain = url && !failed ? activityDomain(url) : null
+const ActivityLogo = ({ logo, url }) => {
+  const [tier, setTier] = React.useState(0)
+  const domain = activityDomain(url)
+  const sources = [logo, domain ? `https://www.google.com/s2/favicons?sz=64&domain=${domain}` : null].filter(Boolean)
+  const src = sources[tier]
 
-  if (!domain) {
+  if (!src) {
     return null
   }
 
   return (
     <img
       className={styles.activityLogo}
-      src={`https://www.google.com/s2/favicons?sz=64&domain=${domain}`}
+      src={src}
       alt=""
       aria-hidden="true"
       loading="lazy"
-      onError={() => setFailed(true)}
+      onError={() => setTier(current => current + 1)}
     />
   )
 }
@@ -311,7 +313,7 @@ const ActivitiesPage = () => {
               <header className={styles.activityHeader}>
                 <span className={styles.typeLabel}>{typeLabel}</span>
                 <div className={styles.activityTitleRow}>
-                  <ActivityLogo url={activity.url} />
+                  <ActivityLogo logo={activity.logo} url={activity.url} />
                   <div className={styles.activityTitleLine}>
                     <h2 className={styles.activityName}>
                       {activity.shortName || activity.name}
