@@ -1,12 +1,12 @@
 import * as React from 'react'
 import Layout from '../components/layout'
 import Seo from '../components/seo'
-import conferences from '../data/activities'
+import { conferences, hackathons } from '../data/activities'
 import * as styles from './activities.module.css'
 
 const fullDatePattern = /^(\d{4})-(\d{2})-(\d{2})$/
 
-const parseConferenceDate = date => {
+const parseEventDate = date => {
   if (typeof date !== 'string') {
     return null
   }
@@ -37,9 +37,9 @@ const parseConferenceDate = date => {
 
 const sortNewestFirst = (first, second) => {
   const firstDate =
-    parseConferenceDate(first.date?.start) ?? Number.NEGATIVE_INFINITY
+    parseEventDate(first.date?.start) ?? Number.NEGATIVE_INFINITY
   const secondDate =
-    parseConferenceDate(second.date?.start) ?? Number.NEGATIVE_INFINITY
+    parseEventDate(second.date?.start) ?? Number.NEGATIVE_INFINITY
 
   return firstDate === secondDate ? 0 : secondDate - firstDate
 }
@@ -142,7 +142,9 @@ const ImageThumbnail = ({ media, label, onOpen }) => (
     aria-label={`${label}: ${media.alt}. Enlarge image`}
   >
     <img
-      className={styles.thumbnailImage}
+      className={`${styles.thumbnailImage} ${
+        media.fit === 'contain' ? styles.thumbnailContain : ''
+      }`}
       src={media.thumbnail || media.src}
       alt=""
       loading="lazy"
@@ -164,7 +166,9 @@ const PdfCertificate = ({ certificate }) => (
   >
     {certificate.thumbnail ? (
       <img
-        className={styles.thumbnailImage}
+        className={`${styles.thumbnailImage} ${
+          certificate.fit === 'contain' ? styles.thumbnailContain : ''
+        }`}
         src={certificate.thumbnail}
         alt=""
         loading="lazy"
@@ -219,6 +223,7 @@ const ActivitiesPage = () => {
   const [activeMedia, setActiveMedia] = React.useState(null)
   const triggerRef = React.useRef(null)
   const sortedConferences = [...conferences].sort(sortNewestFirst)
+  const sortedHackathons = [...hackathons].sort(sortNewestFirst)
 
   const openMedia = (media, trigger) => {
     triggerRef.current = trigger
@@ -232,37 +237,157 @@ const ActivitiesPage = () => {
   return (
     <Layout pageTitle="Activities">
       <p className={styles.intro}>
-        Professional conference service, advising, and invited speaking.
+        Professional conference service, advising, invited speaking, and
+        hackathon judging.
       </p>
 
-      <div className={styles.conferenceList}>
-        {sortedConferences.map(conference => {
-          const meta = [conference.date?.label, conference.location].filter(
-            Boolean
-          )
+      <section
+        className={styles.activitySection}
+        aria-labelledby="conferences-heading"
+      >
+        <h2 id="conferences-heading" className={styles.sectionHeading}>
+          Conferences
+        </h2>
 
-          return (
-            <article key={conference.id} className={styles.conferenceCard}>
-              <header className={styles.conferenceHeader}>
-                <h2 className={styles.conferenceName}>
-                  {conference.shortName || conference.name}
-                </h2>
-                {conference.shortName && (
-                  <p className={styles.conferenceFullName}>
-                    {conference.name}
-                  </p>
-                )}
-                {meta.length > 0 && (
-                  <p className={styles.conferenceMeta}>
-                    <span>{meta.join(' · ')}</span>
-                    {conference.url && (
+        <div className={styles.conferenceList}>
+          {sortedConferences.map(conference => {
+            const meta = [conference.date?.label, conference.location].filter(
+              Boolean
+            )
+
+            return (
+              <article key={conference.id} className={styles.conferenceCard}>
+                <header className={styles.conferenceHeader}>
+                  <h3 className={styles.conferenceName}>
+                    {conference.shortName || conference.name}
+                  </h3>
+                  {conference.shortName && (
+                    <p className={styles.conferenceFullName}>
+                      {conference.name}
+                    </p>
+                  )}
+                  {meta.length > 0 && (
+                    <p className={styles.conferenceMeta}>
+                      <span>{meta.join(' · ')}</span>
+                      {conference.url && (
+                        <a
+                          className={styles.conferenceLink}
+                          href={conference.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Conference website
+                          <span aria-hidden="true"> ↗</span>
+                          <span className={styles.srOnly}>
+                            {' '}
+                            (opens in a new tab)
+                          </span>
+                        </a>
+                      )}
+                    </p>
+                  )}
+                  {conference.description && (
+                    <p className={styles.conferenceDescription}>
+                      {conference.description}
+                    </p>
+                  )}
+                  {conference.url && meta.length === 0 && (
+                    <a
+                      className={styles.conferenceLink}
+                      href={conference.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Conference website
+                      <span aria-hidden="true"> ↗</span>
+                      <span className={styles.srOnly}>
+                        {' '}
+                        (opens in a new tab)
+                      </span>
+                    </a>
+                  )}
+                </header>
+
+                <div className={styles.roleList}>
+                  {(conference.roles || []).map(role => (
+                    <section
+                      key={`${conference.id}-${role.title}`}
+                      className={styles.role}
+                    >
+                      <h4 className={styles.roleTitle}>{role.title}</h4>
+                      {role.url && (
+                        <a
+                          className={styles.roleLink}
+                          href={role.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          View listing
+                          <span aria-hidden="true"> ↗</span>
+                          <span className={styles.srOnly}>
+                            {' '}
+                            (opens in a new tab)
+                          </span>
+                        </a>
+                      )}
+                      <RoleMedia role={role} onOpen={openMedia} />
+                    </section>
+                  ))}
+                </div>
+              </article>
+            )
+          })}
+        </div>
+      </section>
+
+      <section
+        className={styles.activitySection}
+        aria-labelledby="hackathons-heading"
+      >
+        <h2 id="hackathons-heading" className={styles.sectionHeading}>
+          Hackathon judging
+        </h2>
+
+        <div className={styles.hackathonGrid}>
+          {sortedHackathons.map(hackathon => {
+            const meta = [hackathon.date?.label, hackathon.format].filter(
+              Boolean
+            )
+
+            return (
+              <article key={hackathon.id} className={styles.hackathonCard}>
+                <header>
+                  <div className={styles.hackathonTitleLine}>
+                    <h3 className={styles.hackathonName}>{hackathon.name}</h3>
+                    {hackathon.edition && (
+                      <span className={styles.hackathonEdition}>
+                        {hackathon.edition}
+                      </span>
+                    )}
+                  </div>
+                  {meta.length > 0 && (
+                    <p className={styles.hackathonMeta}>{meta.join(' · ')}</p>
+                  )}
+                  {hackathon.description && (
+                    <p className={styles.hackathonDescription}>
+                      {hackathon.description}
+                    </p>
+                  )}
+                </header>
+
+                <div className={styles.hackathonActivity}>
+                  <div className={styles.hackathonRoleLine}>
+                    <strong className={styles.hackathonRole}>
+                      {hackathon.role.title}
+                    </strong>
+                    {hackathon.url && (
                       <a
-                        className={styles.conferenceLink}
-                        href={conference.url}
+                        className={styles.hackathonLink}
+                        href={hackathon.url}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Conference website
+                        {hackathon.linkLabel || 'Website'}
                         <span aria-hidden="true"> ↗</span>
                         <span className={styles.srOnly}>
                           {' '}
@@ -270,60 +395,14 @@ const ActivitiesPage = () => {
                         </span>
                       </a>
                     )}
-                  </p>
-                )}
-                {conference.description && (
-                  <p className={styles.conferenceDescription}>
-                    {conference.description}
-                  </p>
-                )}
-                {conference.url && meta.length === 0 && (
-                  <a
-                    className={styles.conferenceLink}
-                    href={conference.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Conference website
-                    <span aria-hidden="true"> ↗</span>
-                    <span className={styles.srOnly}>
-                      {' '}
-                      (opens in a new tab)
-                    </span>
-                  </a>
-                )}
-              </header>
-
-              <div className={styles.roleList}>
-                {(conference.roles || []).map(role => (
-                  <section
-                    key={`${conference.id}-${role.title}`}
-                    className={styles.role}
-                  >
-                    <h3 className={styles.roleTitle}>{role.title}</h3>
-                    {role.url && (
-                      <a
-                        className={styles.roleLink}
-                        href={role.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        View listing
-                        <span aria-hidden="true"> ↗</span>
-                        <span className={styles.srOnly}>
-                          {' '}
-                          (opens in a new tab)
-                        </span>
-                      </a>
-                    )}
-                    <RoleMedia role={role} onOpen={openMedia} />
-                  </section>
-                ))}
-              </div>
-            </article>
-          )
-        })}
-      </div>
+                  </div>
+                  <RoleMedia role={hackathon.role} onOpen={openMedia} />
+                </div>
+              </article>
+            )
+          })}
+        </div>
+      </section>
 
       {activeMedia && (
         <MediaDialog
@@ -339,7 +418,7 @@ const ActivitiesPage = () => {
 export const Head = () => (
   <Seo
     title="Activities"
-    description="Professional conference service, advising, and invited speaking activities by Swapnil Gaikwad."
+    description="Professional conference service, advising, invited speaking, and hackathon judging activities by Swapnil Gaikwad."
     canonical="/activities/"
   />
 )
