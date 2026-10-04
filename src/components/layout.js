@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Link, useStaticQuery, graphql } from 'gatsby'
+import ThemeToggle from './theme-toggle'
 import * as styles from './layout.module.css'
 
 const Layout = ({ pageTitle, children }) => {
@@ -16,9 +17,12 @@ const Layout = ({ pageTitle, children }) => {
     return (
         <div className={styles.shell}>
             <aside className={styles.sidebar}>
-                <Link to="/" className={styles.siteTitle}>
-                    {data.site.siteMetadata.title}
-                </Link>
+                <div className={styles.sidebarHeader}>
+                    <Link to="/" className={styles.siteTitle}>
+                        {data.site.siteMetadata.title}
+                    </Link>
+                    <ThemeToggle />
+                </div>
                 <p className={styles.tagline}>Distributed systems & scale</p>
                 <nav>
                     <ul className={styles.navLinks}>

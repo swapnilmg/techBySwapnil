@@ -129,6 +129,7 @@
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: 10px;
+  box-shadow: var(--shadow);
 }
 
 .publicationItem:last-child {
