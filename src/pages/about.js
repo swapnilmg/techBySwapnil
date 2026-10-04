@@ -55,17 +55,17 @@ const experiences = [
 
 const publications = [
   {
-    title: "Large-scale Optimization for Wireless Emergency Networks",
+    title: "Data Structure for Efficient Line of Sight Queries",
     venue: "CIKM 2018",
     date: "October 2018",
-    url: "https://davidanastasiu.net/pdf/papers/2018-GaikwadMA-CIKM-los2.pdf",
-    description: "Research on optimizing wireless emergency network deployment for large-scale disaster scenarios."
+    url: "/papers/2018-cikm-large-scale-optimization-wireless-emergency-networks.pdf",
+    description: "Develops and compares methods for fast line-of-sight queries over large-scale 3D city data to support wireless network planning."
   },
   {
     title: "Optimal Constrained Wireless Emergency Network Antenna Placement",
     venue: "IEEE",
     date: "May 2017",
-    url: "https://davidanastasiu.net/pdf/papers/2017-GaikwadA-SCI-los.pdf",
+    url: "/papers/2017-optimal-constrained-wireless-emergency-network-antenna-placement.pdf",
     description: "Communication is paramount during emergencies. This research proposes a framework for identifying optimal placement of wireless network antennas within a city, given multiple criteria constraints."
   },
   {
@@ -76,20 +76,6 @@ const publications = [
     url: null,
     description: "Co-authored with Rajkumar Kuppuswami (primary), Swapnil Gaikwad, and others. Camera-ready version in progress."
   }
-]
-
-const conferenceReviewing = [
-  { org: "IEEE COMPSIF 2027", role: "Reviewer, Cyber Resilience for Sustainability track" },
-  { org: "International Conference on Technology, Engineering, and Management for Societal Impact", role: "Reviewer" },
-  { org: "ariia.in", role: "Reviewer" },
-  { org: "ACM Peer Reviewer Certification", role: "Completed all 6 training modules" }
-]
-
-const bookReviewing = [
-  { org: "Apress", role: "Technical Reviewer" },
-  { org: "Manning Publications", role: "Manuscript Reviewer" },
-  { org: "BPB Publications", role: "Book Reviewer" },
-  { org: "IEEE Professional Communication Society", role: "Book Reviewer" }
 ]
 
 const skills = [
@@ -198,36 +184,6 @@ const AboutPage = ({ data }) => {
             </p>
           </div>
         ))}
-      </section>
-
-      {/* Peer Review & Judging Section */}
-      <section className={styles.section} aria-labelledby="peer-review-heading">
-        <h2 id="peer-review-heading">Peer Review & Judging</h2>
-
-        <h3 className={styles.subheading}>Conference & Journal Reviewing</h3>
-        <ul className={styles.credentialList}>
-          {conferenceReviewing.map((item, index) => (
-            <li key={index} className={styles.credentialItem}>
-              <span className={styles.credentialOrg}>{item.org}</span>
-              <span className={styles.credentialRole}> — {item.role}</span>
-            </li>
-          ))}
-        </ul>
-
-        <h3 className={styles.subheading}>Technical Book Reviewing</h3>
-        <ul className={styles.credentialList}>
-          {bookReviewing.map((item, index) => (
-            <li key={index} className={styles.credentialItem}>
-              <span className={styles.credentialOrg}>{item.org}</span>
-              <span className={styles.credentialRole}> — {item.role}</span>
-            </li>
-          ))}
-        </ul>
-
-        <p className={styles.reviewCta}>
-          Looking for a technical reviewer, hackathon judge, or conference speaker?{' '}
-          <a href="#connect">Get in touch →</a>
-        </p>
       </section>
 
       {/* Writing Section */}
