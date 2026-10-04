@@ -6,44 +6,61 @@
   line-height: 1.7;
 }
 
-.activitySection + .activitySection {
-  margin-top: 2rem;
-}
-
-.sectionHeading {
-  margin: 0 0 0.8rem;
-  color: var(--text);
-  font-size: 1.15rem;
-  line-height: 1.4;
-  letter-spacing: -0.01em;
-}
-
-.conferenceList {
+.activityList {
   display: grid;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
-.conferenceCard {
+.activityCard {
   overflow: hidden;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: 14px;
 }
 
-.conferenceHeader {
-  padding: 1.4rem 1.5rem 1.25rem;
+.activityHeader {
+  padding: 1.1rem 1.25rem 1rem;
 }
 
-.conferenceName {
+.typeLabel {
+  display: inline-block;
+  margin-bottom: 0.45rem;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.activityTitleLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.55rem;
+}
+
+.activityName {
   max-width: 850px;
   margin: 0;
   color: var(--text);
-  font-size: clamp(1.45rem, 2.2vw, 1.8rem);
-  line-height: 1.25;
-  letter-spacing: -0.025em;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  line-height: 1.3;
+  letter-spacing: -0.02em;
 }
 
-.conferenceFullName {
+.activityEdition {
+  padding: 0.12rem 0.42rem;
+  background: var(--accent-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+.activityFullName {
   max-width: 850px;
   margin: 0.3rem 0 0;
   color: var(--text-muted);
@@ -51,28 +68,37 @@
   line-height: 1.5;
 }
 
-.conferenceMeta {
+.activityMeta {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.35rem 1rem;
-  margin: 0.65rem 0 0;
+  margin: 0.55rem 0 0;
   color: var(--accent);
   font-size: 0.9rem;
   font-weight: 650;
   line-height: 1.5;
 }
 
-.conferenceDescription {
+.activityDescriptionRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 1rem;
   max-width: 850px;
-  margin: 0.85rem 0 0;
-  color: var(--text-muted);
-  line-height: 1.6;
+  margin: 0.65rem 0 0;
 }
 
-.conferenceLink,
+.activityDescription {
+  flex: 1 1 520px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.activityLink,
 .roleLink,
-.hackathonLink,
 .originalLink {
   display: inline-block;
   color: var(--accent);
@@ -80,9 +106,8 @@
   text-decoration: none;
 }
 
-.conferenceLink:hover,
+.activityLink:hover,
 .roleLink:hover,
-.hackathonLink:hover,
 .originalLink:hover {
   text-decoration: underline;
 }
@@ -95,6 +120,14 @@
   border-top: 1px solid var(--border);
 }
 
+.roleListTwo {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.roleListSingle {
+  grid-template-columns: 1fr;
+}
+
 .role {
   display: flex;
   min-width: 0;
@@ -103,6 +136,17 @@
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 10px;
+}
+
+.roleSingle {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 176px);
+  align-items: center;
+  gap: 1rem;
+}
+
+.roleDetails {
+  min-width: 0;
 }
 
 .roleTitle {
@@ -119,12 +163,23 @@
   font-size: 0.82rem;
 }
 
+.roleListTwo .roleTitle,
+.roleListSingle .roleTitle {
+  min-height: 0;
+}
+
 .roleMedia {
   display: flex;
   flex-wrap: wrap;
   gap: 0.65rem;
   margin-top: auto;
   padding-top: 0.9rem;
+}
+
+.roleSingle .roleMedia {
+  justify-content: flex-end;
+  margin-top: 0;
+  padding-top: 0;
 }
 
 .thumbnailButton,
@@ -153,9 +208,8 @@
 .thumbnailButton:focus-visible,
 .pdfCertificate:focus-visible,
 .closeButton:focus-visible,
-.conferenceLink:focus-visible,
+.activityLink:focus-visible,
 .roleLink:focus-visible,
-.hackathonLink:focus-visible,
 .originalLink:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -199,92 +253,13 @@
   letter-spacing: 0.08em;
 }
 
-.hackathonGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.85rem;
-}
-
-.hackathonCard {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  padding: 1rem;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-}
-
-.hackathonTitleLine {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.35rem 0.55rem;
-}
-
-.hackathonName {
-  margin: 0;
-  color: var(--text);
-  font-size: 1.05rem;
-  line-height: 1.35;
-}
-
-.hackathonEdition {
-  padding: 0.12rem 0.42rem;
-  background: var(--accent-soft);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  color: var(--accent);
-  font-size: 0.7rem;
-  font-weight: 750;
-  line-height: 1.4;
-}
-
-.hackathonMeta {
-  margin: 0.4rem 0 0;
-  color: var(--accent);
-  font-size: 0.8rem;
-  font-weight: 650;
-  line-height: 1.45;
-}
-
-.hackathonDescription {
-  margin: 0.65rem 0 0;
-  color: var(--text-muted);
-  font-size: 0.88rem;
-  line-height: 1.5;
-}
-
-.hackathonActivity {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  margin-top: 0.8rem;
-  padding-top: 0.7rem;
-  border-top: 1px solid var(--border);
-}
-
-.hackathonRoleLine {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.3rem 0.75rem;
-}
-
-.hackathonRole {
-  color: var(--text);
-  font-size: 0.9rem;
-}
-
-.hackathonLink {
-  font-size: 0.8rem;
-}
-
 @media (max-width: 900px) {
-  .roleList,
-  .hackathonGrid {
+  .roleList {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .roleListSingle {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -384,23 +359,15 @@
     font-size: 1rem;
   }
 
-  .activitySection + .activitySection {
-    margin-top: 1.6rem;
+  .activityHeader {
+    padding: 1rem 1.1rem 0.9rem;
   }
 
-  .sectionHeading {
-    margin-bottom: 0.65rem;
+  .activityName {
+    font-size: 1.3rem;
   }
 
-  .conferenceHeader {
-    padding: 1.2rem;
-  }
-
-  .conferenceName {
-    font-size: 1.4rem;
-  }
-
-  .conferenceMeta {
+  .activityMeta {
     display: grid;
     font-size: 0.9rem;
   }
@@ -411,13 +378,14 @@
     padding: 0.85rem;
   }
 
-  .hackathonGrid {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
-
   .role {
     padding: 1rem;
+  }
+
+  .roleSingle {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
   }
 
   .roleTitle {
@@ -431,10 +399,6 @@
   .thumbnailButton,
   .pdfCertificate {
     width: min(100%, 180px);
-  }
-
-  .hackathonCard {
-    padding: 0.95rem;
   }
 
   .dialogBackdrop {

@@ -1,11 +1,12 @@
-// Activity content is split into conferences and hackathons so each section can
-// keep its own compact layout. Put media in static/activities/<event-id>/, then
-// reference it from the matching role. To add an event, copy an object in the
-// appropriate list. Photos use { src, alt, thumbnail? }; certificates use
+// Activities render in one date-sorted list. To add an entry, copy an object,
+// set type to "conference" or "hackathon", and add one or more roles. Put media
+// in static/activities/<activity-id>/ and reference it from the matching role.
+// Photos use { src, alt, thumbnail? }; certificates use
 // { type: "image" | "pdf", src, alt, thumbnail?, fit? }.
-export const conferences = [
+const activities = [
   {
     id: 'icieee-2026',
+    type: 'conference',
     shortName: 'ICIEEE 2026',
     name:
       'International Conference on Innovations in Electronics and Electrical Engineering (ICIEEE-2026)',
@@ -18,6 +19,7 @@ export const conferences = [
     description:
       'The conference was supported by the World Research Union and conducted under IEEE Conference ID #69095. It focuses on interdisciplinary collaboration and advances across electronics and electrical engineering.',
     url: 'https://icieee.com/2026',
+    linkLabel: 'Conference website',
     roles: [
       {
         title: 'Technical Advisor',
@@ -60,12 +62,10 @@ export const conferences = [
         ]
       }
     ]
-  }
-]
-
-export const hackathons = [
+  },
   {
     id: 'bincom-hackathon-6',
+    type: 'hackathon',
     name: 'Bincom Hackathon',
     edition: '6.0',
     date: {
@@ -79,23 +79,26 @@ export const hackathons = [
       'A 24-hour innovation sprint for building working software solutions powered by generative AI.',
     url: 'https://hackathon.bincomdevcenter.com/',
     linkLabel: 'Website',
-    role: {
-      title: 'Judge',
-      photos: [],
-      certificates: [
-        {
-          type: 'pdf',
-          src: '/activities/bincom-hackathon-6/letter-of-appreciation.pdf',
-          thumbnail:
-            '/activities/bincom-hackathon-6/letter-of-appreciation.png',
-          alt: 'Bincom Hackathon 6.0 judging letter of appreciation',
-          fit: 'contain'
-        }
-      ]
-    }
+    roles: [
+      {
+        title: 'Judge',
+        photos: [],
+        certificates: [
+          {
+            type: 'pdf',
+            src: '/activities/bincom-hackathon-6/letter-of-appreciation.pdf',
+            thumbnail:
+              '/activities/bincom-hackathon-6/letter-of-appreciation.png',
+            alt: 'Bincom Hackathon 6.0 judging letter of appreciation',
+            fit: 'contain'
+          }
+        ]
+      }
+    ]
   },
   {
     id: 'hack-for-humanity-summer-2026',
+    type: 'hackathon',
     name: 'Hack for Humanity',
     edition: 'Summer 2026',
     date: {
@@ -108,14 +111,23 @@ export const hackathons = [
       'A month-long event creating technology solutions for mental and physical health issues, with an optional focus on AI.',
     url: 'https://hack-for-humanity-summer-26.devpost.com/',
     linkLabel: 'Devpost',
-    role: {
-      title: 'Judge',
-      photos: [],
-      certificates: []
-    }
+    roles: [
+      {
+        title: 'Judge',
+        photos: [],
+        certificates: []
+      },
+      {
+        title: 'Mentor',
+        url: 'https://hack-for-humanity-summer-26.devpost.com/',
+        photos: [],
+        certificates: []
+      }
+    ]
   },
   {
     id: 'volthacks-2026',
+    type: 'hackathon',
     name: 'VoltHacks',
     edition: '2026',
     date: {
@@ -129,18 +141,22 @@ export const hackathons = [
       'A hackathon focused on building real-world solutions using hardware, IoT, and AI.',
     url: 'https://volthacks.devpost.com/',
     linkLabel: 'Devpost',
-    role: {
-      title: 'Judge',
-      photos: [],
-      certificates: [
-        {
-          type: 'image',
-          src: '/activities/volthacks-2026/judge-certificate.png',
-          thumbnail:
-            '/activities/volthacks-2026/judge-certificate-thumbnail.png',
-          alt: 'VoltHacks 2026 Judge certificate of recognition'
-        }
-      ]
-    }
+    roles: [
+      {
+        title: 'Judge',
+        photos: [],
+        certificates: [
+          {
+            type: 'image',
+            src: '/activities/volthacks-2026/judge-certificate.png',
+            thumbnail:
+              '/activities/volthacks-2026/judge-certificate-thumbnail.png',
+            alt: 'VoltHacks 2026 Judge certificate of recognition'
+          }
+        ]
+      }
+    ]
   }
 ]
+
+export default activities
