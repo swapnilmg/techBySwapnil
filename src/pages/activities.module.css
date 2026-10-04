@@ -34,20 +34,25 @@
   text-transform: uppercase;
 }
 
-.activityTitleRow {
+.activityHeaderMain {
   display: flex;
-  align-items: center;
-  gap: 0.6rem;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.activityHeaderText {
+  flex: 1;
+  min-width: 0;
 }
 
 .activityLogo {
-  width: 32px;
-  height: 32px;
+  width: 64px;
+  height: 64px;
   flex-shrink: 0;
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 3px;
+  border-radius: 10px;
+  padding: 5px;
   object-fit: contain;
 }
 
@@ -379,6 +384,15 @@
 
   .activityHeader {
     padding: 1rem 1.1rem 0.9rem;
+  }
+
+  .activityHeaderMain {
+    gap: 0.75rem;
+  }
+
+  .activityLogo {
+    width: 44px;
+    height: 44px;
   }
 
   .activityName {

@@ -312,51 +312,53 @@ const ActivitiesPage = () => {
             <article key={activity.id} className={styles.activityCard}>
               <header className={styles.activityHeader}>
                 <span className={styles.typeLabel}>{typeLabel}</span>
-                <div className={styles.activityTitleRow}>
+                <div className={styles.activityHeaderMain}>
                   <ActivityLogo logo={activity.logo} url={activity.url} />
-                  <div className={styles.activityTitleLine}>
-                    <h2 className={styles.activityName}>
-                      {activity.shortName || activity.name}
-                    </h2>
-                    {!activity.shortName && activity.edition && (
-                      <span className={styles.activityEdition}>
-                        {activity.edition}
-                      </span>
+                  <div className={styles.activityHeaderText}>
+                    <div className={styles.activityTitleLine}>
+                      <h2 className={styles.activityName}>
+                        {activity.shortName || activity.name}
+                      </h2>
+                      {!activity.shortName && activity.edition && (
+                        <span className={styles.activityEdition}>
+                          {activity.edition}
+                        </span>
+                      )}
+                    </div>
+                    {activity.shortName && (
+                      <p className={styles.activityFullName}>{activity.name}</p>
+                    )}
+                    {meta.length > 0 && (
+                      <p className={styles.activityMeta}>
+                        <span>{meta.join(' · ')}</span>
+                      </p>
+                    )}
+                    {(activity.description || activity.url) && (
+                      <div className={styles.activityDescriptionRow}>
+                        {activity.description && (
+                          <p className={styles.activityDescription}>
+                            {activity.description}
+                          </p>
+                        )}
+                        {activity.url && (
+                          <a
+                            className={styles.activityLink}
+                            href={activity.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {activity.linkLabel || 'Website'}
+                            <span aria-hidden="true"> ↗</span>
+                            <span className={styles.srOnly}>
+                              {' '}
+                              (opens in a new tab)
+                            </span>
+                          </a>
+                        )}
+                      </div>
                     )}
                   </div>
                 </div>
-                {activity.shortName && (
-                  <p className={styles.activityFullName}>{activity.name}</p>
-                )}
-                {meta.length > 0 && (
-                  <p className={styles.activityMeta}>
-                    <span>{meta.join(' · ')}</span>
-                  </p>
-                )}
-                {(activity.description || activity.url) && (
-                  <div className={styles.activityDescriptionRow}>
-                    {activity.description && (
-                      <p className={styles.activityDescription}>
-                        {activity.description}
-                      </p>
-                    )}
-                    {activity.url && (
-                      <a
-                        className={styles.activityLink}
-                        href={activity.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {activity.linkLabel || 'Website'}
-                        <span aria-hidden="true"> ↗</span>
-                        <span className={styles.srOnly}>
-                          {' '}
-                          (opens in a new tab)
-                        </span>
-                      </a>
-                    )}
-                  </div>
-                )}
               </header>
 
               {roles.length > 0 && (
