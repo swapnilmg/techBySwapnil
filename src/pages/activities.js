@@ -81,14 +81,16 @@ const ActivityLogo = ({ logo, url }) => {
   }
 
   return (
-    <img
-      className={styles.activityLogo}
-      src={src}
-      alt=""
-      aria-hidden="true"
-      loading="lazy"
-      onError={() => setTier(current => current + 1)}
-    />
+    <span className={styles.activityLogoFrame}>
+      <img
+        className={styles.activityLogo}
+        src={src}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        onError={() => setTier(current => current + 1)}
+      />
+    </span>
   )
 }
 
