@@ -1,10 +1,9 @@
-// Put conference media in static/activities/<conference-id>/ and reference it
-// from the matching role. To add a conference, copy the object shape below and
-// add its roles. Photos use { src, alt, thumbnail? }; certificates use
-// { type: "image" | "pdf", src, alt, thumbnail? }. The three ICIEEE role
-// certificates and their PNG thumbnails live together in
-// static/activities/icieee-2026/.
-const conferences = [
+// Activity content is split into conferences and hackathons so each section can
+// keep its own compact layout. Put media in static/activities/<event-id>/, then
+// reference it from the matching role. To add an event, copy an object in the
+// appropriate list. Photos use { src, alt, thumbnail? }; certificates use
+// { type: "image" | "pdf", src, alt, thumbnail?, fit? }.
+export const conferences = [
   {
     id: 'icieee-2026',
     shortName: 'ICIEEE 2026',
@@ -64,4 +63,84 @@ const conferences = [
   }
 ]
 
-export default conferences
+export const hackathons = [
+  {
+    id: 'bincom-hackathon-6',
+    name: 'Bincom Hackathon',
+    edition: '6.0',
+    date: {
+      start: '2026-09-18',
+      end: '2026-09-19',
+      label: 'Sep 18–19, 2026'
+    },
+    format: 'Hybrid',
+    organizer: 'Bincom Dev Center',
+    description:
+      'A 24-hour innovation sprint for building working software solutions powered by generative AI.',
+    url: 'https://hackathon.bincomdevcenter.com/',
+    linkLabel: 'Website',
+    role: {
+      title: 'Judge',
+      photos: [],
+      certificates: [
+        {
+          type: 'pdf',
+          src: '/activities/bincom-hackathon-6/letter-of-appreciation.pdf',
+          thumbnail:
+            '/activities/bincom-hackathon-6/letter-of-appreciation.png',
+          alt: 'Bincom Hackathon 6.0 judging letter of appreciation',
+          fit: 'contain'
+        }
+      ]
+    }
+  },
+  {
+    id: 'hack-for-humanity-summer-2026',
+    name: 'Hack for Humanity',
+    edition: 'Summer 2026',
+    date: {
+      start: '2026-08-07',
+      end: '2026-09-04',
+      label: 'Aug 7–Sep 4, 2026'
+    },
+    format: 'Online',
+    description:
+      'A month-long event creating technology solutions for mental and physical health issues, with an optional focus on AI.',
+    url: 'https://hack-for-humanity-summer-26.devpost.com/',
+    linkLabel: 'Devpost',
+    role: {
+      title: 'Judge',
+      photos: [],
+      certificates: []
+    }
+  },
+  {
+    id: 'volthacks-2026',
+    name: 'VoltHacks',
+    edition: '2026',
+    date: {
+      start: '2026-05-22',
+      end: '2026-09-13',
+      label: 'May 22–Sep 13, 2026'
+    },
+    format: 'Online',
+    organizer: 'VoltHacks',
+    description:
+      'A hackathon focused on building real-world solutions using hardware, IoT, and AI.',
+    url: 'https://volthacks.devpost.com/',
+    linkLabel: 'Devpost',
+    role: {
+      title: 'Judge',
+      photos: [],
+      certificates: [
+        {
+          type: 'image',
+          src: '/activities/volthacks-2026/judge-certificate.png',
+          thumbnail:
+            '/activities/volthacks-2026/judge-certificate-thumbnail.png',
+          alt: 'VoltHacks 2026 Judge certificate of recognition'
+        }
+      ]
+    }
+  }
+]
