@@ -1,0 +1,51 @@
+---
+title: "GenAI Agents for the Workflows That Actually Resist Automation"
+date: "2026-09-23"
+slug: "genai-agents-judgment-heavy-workflows"
+description: "Treat automation as a question of where judgment actually lives in a workflow, not as a question of model capability."
+tags: ["genai", "agents", "automation"]
+reading_time: 3
+canonical_url: "https://swapnilgaikwad.me/blog/genai-agents-judgment-heavy-workflows/"
+---
+
+Enterprise accounting onboarding for a new fee-charging business can take up to six months. Not because any single step is technically hard, but because most of the steps require judgment: assessing fee structures, tax treatment, and compliance context, rather than just moving data from one place to another. That is exactly the kind of work generative AI has historically struggled to touch.
+
+This post is about a system built to change that: a GenAI agent-based initiative that compresses a six-month onboarding process toward three weeks. The core idea is simple to state and hard to execute: treat automation as a question of *where judgment actually lives in a workflow*, not as a question of model capability.
+
+## Start by mapping the judgment, not the tasks
+
+The instinct with a long process is to automate it end to end. That is the wrong first move. Before writing a single prompt, we mapped the process and split every step into two buckets:
+
+- **Mechanical steps** - deterministic transformations, lookups, and validations where the correct output is a function of the input. These are automatable with or without an LLM.
+- **Judgment-heavy steps** - places where an experienced human weighs incomplete context, applies policy, and makes a call that a rule engine cannot capture cleanly.
+
+Most of the six months was not spent on mechanical work. It was spent waiting on, and performing, the judgment-heavy steps. That is where the real latency lived, and that is where agents had to earn their place.
+
+## Narrow, bounded agents beat one large end-to-end agent
+
+Our first temptation was a single agent that owned the whole flow. It was also our first mistake. A large end-to-end agent is hard to constrain, hard to debug, and fails in ways that are difficult to attribute to a specific decision.
+
+Narrow agents, each scoped to one bounded decision, consistently outperformed the monolith. They were easier to evaluate in isolation, easier to give the right context, and easier to place a human checkpoint around. When something went wrong, we knew exactly which agent produced the output and why.
+
+## Design the human checkpoints in, do not bolt them on
+
+Human-in-the-loop is often added at the end, as a rubber-stamp review over whatever the model produced. That approach fails quietly: reviewers approve outputs that look right without the context to catch what is wrong.
+
+We designed the checkpoints deliberately, placing them where a wrong decision would be expensive and hard to reverse, and giving the reviewer the specific context the agent used to reach its conclusion. The goal was not "a human looks at everything" but "a human decides the things that actually need a human."
+
+## What broke, and what it taught us
+
+The most useful failures were the ones where an agent's output *looked* correct but missed context a human would have caught. An answer that is fluent, well-formatted, and confidently wrong is more dangerous than one that is obviously broken, because it slips through review.
+
+Those cases taught us where the human-in-the-loop boundary genuinely needed to sit. Every time an agent produced a plausible-but-wrong result, it was a signal that the step depended on context we had not given the agent, and often could not give it. That is a boundary, not a bug to prompt away.
+
+## A transferable way to think about it
+
+The takeaway is not a success story with the hard parts edited out. It is a practical framework you can apply to your own "impossible to automate" workflows:
+
+1. Map the process and separate mechanical steps from judgment-heavy ones.
+2. Prefer narrow, bounded agents over one large end-to-end agent.
+3. Place human checkpoints where reversibility is low and give reviewers the agent's context.
+4. Treat plausible-but-wrong outputs as a map of where judgment must stay human.
+
+Plenty of workflows labeled "too judgment-heavy to automate" are not actually impossible. They just need automation designed around where the judgment lives, rather than in spite of it.
