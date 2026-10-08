@@ -8,6 +8,29 @@
 // (for signed CDN links) expire outright.
 const activities = [
   {
+    id: 'hackohio-2026',
+    type: 'hackathon',
+    name: 'HackOHI/O',
+    edition: '2026',
+    date: {
+      start: '2026-10-23',
+      end: '2026-10-25',
+      label: 'Oct 23–25, 2026'
+    },
+    organizer: 'The Ohio State University',
+    description:
+      "Ohio State University's student hackathon. Judges score teams by reviewing project video submissions and joining live discussions with the teams.",
+    url: 'https://hack.osu.edu/',
+    linkLabel: 'Website',
+    roles: [
+      {
+        title: 'Judge',
+        photos: [],
+        certificates: []
+      }
+    ]
+  },
+  {
     id: 'icieee-2026',
     type: 'conference',
     shortName: 'ICIEEE 2026',
