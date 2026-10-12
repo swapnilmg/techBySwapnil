@@ -31,6 +31,30 @@ const activities = [
     ]
   },
   {
+    id: 'univabio-2026',
+    type: 'hackathon',
+    name: 'UnivaBio',
+    edition: '2026',
+    // Judging dates not announced yet; dated by the Oct 6 submission close so
+    // the entry sorts correctly. Update start/end/label once judging is set.
+    date: {
+      start: '2026-10-06',
+      label: 'Oct 2026'
+    },
+    format: 'Online',
+    description:
+      'An online AI and biotechnology competition for the next generation of healthtech builders.',
+    url: 'https://internshala.com/competitions/univabio-hackathon-2026-ai-biotechnology-competition/',
+    linkLabel: 'Competition listing',
+    roles: [
+      {
+        title: 'Judge',
+        photos: [],
+        certificates: []
+      }
+    ]
+  },
+  {
     id: 'gicite-2026',
     type: 'conference',
     shortName: 'GICITE 2026',
