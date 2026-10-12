@@ -8,6 +8,40 @@
 // (for signed CDN links) expire outright.
 const activities = [
   {
+    id: 'gicite-2026',
+    type: 'conference',
+    shortName: 'GICITE 2026',
+    name:
+      'IEEE Germany–India Conference on Innovation, Technology, and Engineering (GICITE 2026)',
+    date: {
+      start: '2026-11-06',
+      end: '2026-11-07',
+      label: 'Nov 6–7, 2026'
+    },
+    location: 'Technische Universität Berlin, Germany',
+    description:
+      'Conducted under IEEE Conference ID #71006 and sponsored by the World Research Union (WRU) and the London College of Applied Research and Education (LCARE). It brings together researchers, industry leaders, and practitioners across innovation, technology, and engineering.',
+    url: 'https://wrunion.org',
+    linkLabel: 'Organizer website',
+    roles: [
+      {
+        title: 'Technical Advisory Committee Member',
+        photos: [],
+        certificates: []
+      },
+      {
+        title: 'Session Chair',
+        photos: [],
+        certificates: []
+      },
+      {
+        title: 'Invited Talk (Virtual)',
+        photos: [],
+        certificates: []
+      }
+    ]
+  },
+  {
     id: 'icieee-2026',
     type: 'conference',
     shortName: 'ICIEEE 2026',
