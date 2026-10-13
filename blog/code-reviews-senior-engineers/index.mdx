@@ -23,6 +23,21 @@ A change can be locally correct and systemically wrong. The code is clean. The t
 
 Those changes are dangerous precisely because they look good in the diff.
 
+<Matrix
+  title="Correct is not enough"
+  caption="Bug-finding review only checks the columns. The costly change is correct code in the wrong place, because it passes every test and still looks good in the diff."
+  colLabel="Is the implementation correct?"
+  rowLabel="Does it belong here?"
+  cols={['Correct', 'Has a bug']}
+  rows={['Belongs', "Doesn't belong"]}
+  cells={[
+    ['Approve', 'Fix the bug'],
+    ['Locally correct, systemically wrong', 'Rethink the change']
+  ]}
+  highlight={[1, 0]}
+/>
+
+
 Finding them requires a different model of code review. The job is not only to ask whether the implementation works. It is to ask whether the implementation belongs.
 
 That is where experienced reviewers create the most leverage.
@@ -48,6 +63,17 @@ Bug finding matters. But research suggests that it is an incomplete description 
 In a large Microsoft study, Alberto Bacchelli and Christian Bird observed 17 developers across 16 teams, manually classified 570 review comments, and surveyed 165 managers and 873 developers and testers.
 
 [Finding defects was the top-ranked motivation](https://www.microsoft.com/en-us/research/publication/expectations-outcomes-and-challenges-of-modern-code-review/) for 44% of the developers surveyed. Yet only 14% of the comments in the researchers' sample were classified as defect-related. Code improvements, such as removing unnecessary code or improving readability, were the largest category at 29%.
+
+<Bars
+  title="What comments were about"
+  caption="In Bacchelli and Bird's sample of 570 review comments, code improvements outnumbered defect comments two to one."
+  legend={false}
+  items={[
+    { label: 'Code improvements', value: 29, display: '29%', kind: 'focus' },
+    { label: 'Defects', value: 14, display: '14%', kind: 'muted' }
+  ]}
+/>
+
 
 The measures are not identical, but the gap is useful: what teams say review is for and what review actually produces are not quite the same thing.
 
@@ -81,6 +107,35 @@ But the settlement amount is already calculated by an upstream pricing component
 1. **Hidden coupling.** The payment path now depends on an exchange-rate source it previously did not need.
 2. **Duplicated policy.** Rounding and rate-selection rules now exist in two places and can drift independently.
 3. **A bad precedent.** If `authorize` can change pricing, the next change can add fees, tax adjustments, or discounts. A handler with one responsibility slowly becomes a second pricing system.
+
+<Compare
+  title="Who owns conversion"
+  caption="Both versions pass their tests. Only one keeps currency conversion with the component that already owns it."
+  legend={{ step: 'Handler', risk: 'New responsibility', focus: 'Existing owner' }}
+  left={{
+    title: 'Convert inside authorize',
+    kind: 'risk',
+    steps: [
+      { label: 'Validate' },
+      { label: 'Authorize', note: 'Now converts currency', kind: 'risk' },
+      { label: 'Capture' },
+      { label: 'Settle' }
+    ],
+    verdict: 'Hidden coupling, duplicated policy, a bad precedent'
+  }}
+  right={{
+    title: 'Consume the upstream amount',
+    kind: 'focus',
+    steps: [
+      { label: 'Upstream pricing', note: 'Already calculates the amount', kind: 'focus' },
+      { label: 'Authorize', note: 'Uses the amount on the order' },
+      { label: 'Capture' },
+      { label: 'Settle' }
+    ],
+    verdict: 'One owner for conversion; the new logic is deleted'
+  }}
+/>
+
 
 No syntax rule exposes those problems. More tests around the new conversion code do not solve them either. The implementation can be perfectly tested and still be the wrong implementation.
 
@@ -151,6 +206,18 @@ A new retry policy in a shared client deserves more thought. It can amplify traf
 
 An authorization change, irreversible data migration, or public API contract deserves a slower review, explicit failure scenarios, and someone who understands the affected domain.
 
+<Bars
+  title="Attention follows risk"
+  caption="Illustrative. The bars are relative, not measured: the wider the blast radius and the harder the change is to undo, the slower the review."
+  legend={false}
+  items={[
+    { label: 'Copy change behind a flag', value: 1, display: 'Review, move on', kind: 'muted' },
+    { label: 'Retry policy in a shared client', value: 2, display: 'More thought', kind: 'step' },
+    { label: 'Auth, migration, or public API', value: 4, display: 'Slow, with failure scenarios', kind: 'risk' }
+  ]}
+/>
+
+
 Seniority in review is not demonstrated by finding something to say on every line. It is demonstrated by spending attention where a mistake would be expensive.
 
 <a id="right-reviewer"></a>
@@ -207,6 +274,18 @@ Only then go deep on the implementation:
 - Does the test strategy match the blast radius?
 
 This order matters. There is little value in perfecting tests for code the system should not own.
+
+<Flow
+  title="Three passes, in order"
+  caption="Placement comes before correctness, so you never polish tests for code that should not exist."
+  legend={false}
+  steps={[
+    { label: 'Intent and risk', tag: 'Pass 1', note: 'Before opening the diff' },
+    { label: 'Placement and precedent', tag: 'Pass 2', note: 'Should this exist here?', kind: 'focus' },
+    { label: 'Correctness and evidence', tag: 'Pass 3', note: 'Only then, line by line' }
+  ]}
+/>
+
 
 <a id="fewer-comments"></a>
 
