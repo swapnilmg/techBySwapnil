@@ -20,6 +20,7 @@ post order. Re-run after changing a figure and commit the updated PNGs.
 """
 import os
 import re
+import shutil
 import sys
 
 from playwright.sync_api import sync_playwright
@@ -45,6 +46,14 @@ def export(page, slug):
 
     out_dir = os.path.join(ROOT, "static", "blog-figures", slug)
     os.makedirs(out_dir, exist_ok=True)
+
+    # The post's cover (blog/<slug>/cover.*) is copied alongside the figures
+    # so cross-posts can use the same cover image.
+    post_dir = os.path.join(ROOT, "blog", slug)
+    for name in sorted(os.listdir(post_dir)) if os.path.isdir(post_dir) else []:
+        if name.startswith("cover."):
+            shutil.copyfile(os.path.join(post_dir, name), os.path.join(out_dir, name))
+            print(f"\n<!-- {slug}: cover image: {SITE_URL}/blog-figures/{slug}/{name} -->")
 
     print(f"\n<!-- {slug}: dev.to markdown, in post order -->")
     for index, figure in enumerate(figures, 1):

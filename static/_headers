@@ -1,2 +1,7 @@
 /*.pdf
   Content-Disposition: inline
+
+# Cross-posting assets (figures and covers) can be fetched by other sites,
+# e.g. the dev.to editor, so cross-posts can attach them directly.
+/blog-figures/*
+  Access-Control-Allow-Origin: *
