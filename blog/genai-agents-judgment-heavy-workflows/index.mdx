@@ -12,6 +12,17 @@ Enterprise accounting onboarding for a new fee-charging business can take up to 
 
 This post is about a system built to change that: a GenAI agent-based initiative that compresses a six-month onboarding process toward three weeks. The core idea is simple to state and hard to execute: treat automation as a question of *where judgment actually lives in a workflow*, not as a question of model capability.
 
+<Bars
+  title="The goal"
+  caption="The months were not spent moving data. They were spent on judgment, which is where the agents had to earn their place."
+  legend={false}
+  items={[
+    { label: 'Typical onboarding', value: 26, display: 'Up to 6 months', kind: 'muted' },
+    { label: 'With agents (target)', value: 3, display: '~3 weeks', kind: 'focus' }
+  ]}
+/>
+
+
 ## Start by mapping the judgment, not the tasks
 
 The instinct with a long process is to automate it end to end. That is the wrong first move. Before writing a single prompt, we mapped the process and split every step into two buckets:
@@ -21,11 +32,49 @@ The instinct with a long process is to automate it end to end. That is the wrong
 
 Most of the six months was not spent on mechanical work. It was spent waiting on, and performing, the judgment-heavy steps. That is where the real latency lived, and that is where agents had to earn their place.
 
+<Flow
+  title="Mapping the judgment"
+  caption="Simplified. The mechanical steps at either end were never the bottleneck; the judgment-heavy middle is where the time went."
+  legend={{ step: 'Mechanical', focus: 'Judgment-heavy' }}
+  steps={[
+    { label: 'Gather business inputs', note: 'Move and transform data', kind: 'step' },
+    { label: 'Assess fee structure', kind: 'focus' },
+    { label: 'Determine tax treatment', kind: 'focus' },
+    { label: 'Review compliance context', kind: 'focus' },
+    { label: 'Validate and load', note: 'Lookups and checks', kind: 'step' }
+  ]}
+/>
+
+
 ## Narrow, bounded agents beat one large end-to-end agent
 
 Our first temptation was a single agent that owned the whole flow. It was also our first mistake. A large end-to-end agent is hard to constrain, hard to debug, and fails in ways that are difficult to attribute to a specific decision.
 
 Narrow agents, each scoped to one bounded decision, consistently outperformed the monolith. They were easier to evaluate in isolation, easier to give the right context, and easier to place a human checkpoint around. When something went wrong, we knew exactly which agent produced the output and why.
+
+<Compare
+  title="One agent or many"
+  caption="A monolith fails as a whole. Narrow agents fail one decision at a time, which is something you can evaluate, review, and fix."
+  left={{
+    title: 'One end-to-end agent',
+    kind: 'risk',
+    steps: [
+      { label: 'Single agent owns the whole flow', note: 'Every decision in one context', kind: 'agent' }
+    ],
+    verdict: 'Hard to constrain, hard to debug, failures hard to attribute'
+  }}
+  right={{
+    title: 'Narrow, bounded agents',
+    kind: 'focus',
+    steps: [
+      { label: 'Fee structure agent', kind: 'agent' },
+      { label: 'Tax treatment agent', kind: 'agent' },
+      { label: 'Compliance agent', kind: 'agent' }
+    ],
+    verdict: 'Each evaluated alone; every output traces to one agent'
+  }}
+/>
+
 
 ## Design the human checkpoints in, do not bolt them on
 
@@ -33,11 +82,39 @@ Human-in-the-loop is often added at the end, as a rubber-stamp review over whate
 
 We designed the checkpoints deliberately, placing them where a wrong decision would be expensive and hard to reverse, and giving the reviewer the specific context the agent used to reach its conclusion. The goal was not "a human looks at everything" but "a human decides the things that actually need a human."
 
+<Flow
+  title="Checkpoints by design"
+  caption="Illustrative. A human decides only where a wrong call is expensive to undo, and sees the context the agent used to reach it."
+  legend={{ step: 'Automated check' }}
+  steps={[
+    { label: 'Fee structure agent', kind: 'agent' },
+    { label: 'Reviewer decides', tag: 'Checkpoint', note: 'Hard to reverse; sees agent context', kind: 'human' },
+    { label: 'Tax treatment agent', kind: 'agent' },
+    { label: 'Validation', note: 'No human needed', kind: 'step' }
+  ]}
+/>
+
+
 ## What broke, and what it taught us
 
 The most useful failures were the ones where an agent's output *looked* correct but missed context a human would have caught. An answer that is fluent, well-formatted, and confidently wrong is more dangerous than one that is obviously broken, because it slips through review.
 
 Those cases taught us where the human-in-the-loop boundary genuinely needed to sit. Every time an agent produced a plausible-but-wrong result, it was a signal that the step depended on context we had not given the agent, and often could not give it. That is a boundary, not a bug to prompt away.
+
+<Matrix
+  title="Where review breaks down"
+  caption="The costly failures read as correct. Each one marked a place where the judgment had to stay with a human."
+  colLabel="How the output reads"
+  rowLabel="What it actually is"
+  cols={['Looks right', 'Looks wrong']}
+  rows={['Correct', 'Wrong']}
+  cells={[
+    ['Approved, as it should be', 'Flagged, then cleared'],
+    ['Slips through review', 'Caught as broken']
+  ]}
+  highlight={[1, 0]}
+/>
+
 
 ## A transferable way to think about it
 
