@@ -51,9 +51,25 @@ const Legend = ({ kinds, legend }) => {
 
 // Shared frame: every diagram is a <figure> with an optional short title and a
 // required caption that states the takeaway in one sentence.
-export const Figure = ({ title, caption, children, wide = false }) => (
-  <figure className={`${styles.figure} ${wide ? styles.figureWide : ''}`}>
-    {title && <p className={styles.figureTitle}>{title}</p>}
+// `data-figure` lets scripts/export-figures.py tell component figures (which
+// need exporting as images for cross-posting) from <Diagram> images (which
+// already are images).
+export const Figure = ({
+  title,
+  caption,
+  children,
+  wide = false,
+  type = 'component'
+}) => (
+  <figure
+    className={`${styles.figure} ${wide ? styles.figureWide : ''}`}
+    data-figure={type}
+  >
+    {title && (
+      <p className={styles.figureTitle} data-figure-title>
+        {title}
+      </p>
+    )}
     <div className={styles.canvas}>{children}</div>
     {caption && <figcaption className={styles.caption}>{caption}</figcaption>}
   </figure>
@@ -232,6 +248,26 @@ export const Bars = ({ title, caption, items = [], legend }) => {
   )
 }
 
-const diagrams = { Figure, Flow, Compare, Matrix, Bars }
+// A draw.io diagram (architecture, sequence, anything the components above
+// can't express), exported as SVG or PNG into static/blog-figures/<slug>/.
+// The image sits on a light panel in both themes, because draw.io exports use
+// the light palette; the frame, title, and caption match every other figure.
+// src: site-relative path, e.g. '/blog-figures/my-post/1-request-path.drawio.svg'
+// alt: what the diagram shows, for screen readers (required)
+export const Diagram = ({ title, caption, src, alt, wide = false }) => (
+  <Figure title={title} caption={caption} wide={wide} type="image">
+    <a
+      className={styles.imageLink}
+      href={src}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img className={styles.image} src={src} alt={alt || ''} loading="lazy" />
+      <span className={styles.srOnly}> (opens full size in a new tab)</span>
+    </a>
+  </Figure>
+)
+
+const diagrams = { Figure, Flow, Compare, Matrix, Bars, Diagram }
 
 export default diagrams
