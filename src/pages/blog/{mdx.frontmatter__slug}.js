@@ -5,10 +5,12 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import Layout from '../../components/layout'
 import Seo from '../../components/seo'
 import Callout from '../../components/callout'
+import diagrams from '../../components/diagrams'
 import * as styles from './blog.module.css'
 
 // Components available to every MDX post without an import in the content file.
-const shortcodes = { Callout }
+// Diagram components follow the design system in CLAUDE.md / AGENTS.md.
+const shortcodes = { Callout, ...diagrams }
 
 const BlogPost = ({ data, children }) => {
   const { frontmatter, timeToRead } = data.mdx

@@ -12,6 +12,21 @@
   --accent-soft: rgba(102, 51, 153, 0.08);
   --shadow: 0 1px 2px rgba(22, 24, 29, 0.04), 0 8px 24px rgba(22, 24, 29, 0.06);
 
+  /* Diagram palette (see "Diagram design system" in CLAUDE.md / AGENTS.md).
+     Fixed semantic roles; posts never add colours of their own. */
+  --diagram-line: #9a9fb0;
+  --diagram-step: #9a9fb0;
+  --diagram-step-soft: #f3f3f7;
+  --diagram-focus: #663399;
+  --diagram-focus-soft: #f1eaf9;
+  --diagram-agent: #2563eb;
+  --diagram-agent-soft: #eaf1fe;
+  --diagram-human: #0f766e;
+  --diagram-human-soft: #e6f4f2;
+  --diagram-risk: #b45309;
+  --diagram-risk-soft: #fdf3e7;
+  --diagram-muted: #b8bccb;
+
   --sidebar-width: 260px;
   --content-max-width: 700px;
 }
@@ -30,6 +45,18 @@
     --accent-dark: #9b72e0;
     --accent-soft: rgba(183, 148, 246, 0.14);
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.3);
+    --diagram-line: #6b7489;
+    --diagram-step: #6b7489;
+    --diagram-step-soft: #1f2636;
+    --diagram-focus: #b794f6;
+    --diagram-focus-soft: rgba(183, 148, 246, 0.14);
+    --diagram-agent: #7aa7ff;
+    --diagram-agent-soft: rgba(122, 167, 255, 0.13);
+    --diagram-human: #4fd1c5;
+    --diagram-human-soft: rgba(79, 209, 197, 0.12);
+    --diagram-risk: #f6ad55;
+    --diagram-risk-soft: rgba(246, 173, 85, 0.13);
+    --diagram-muted: #4a5368;
   }
 }
 
@@ -46,6 +73,18 @@
   --accent-dark: #9b72e0;
   --accent-soft: rgba(183, 148, 246, 0.14);
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.3);
+  --diagram-line: #6b7489;
+  --diagram-step: #6b7489;
+  --diagram-step-soft: #1f2636;
+  --diagram-focus: #b794f6;
+  --diagram-focus-soft: rgba(183, 148, 246, 0.14);
+  --diagram-agent: #7aa7ff;
+  --diagram-agent-soft: rgba(122, 167, 255, 0.13);
+  --diagram-human: #4fd1c5;
+  --diagram-human-soft: rgba(79, 209, 197, 0.12);
+  --diagram-risk: #f6ad55;
+  --diagram-risk-soft: rgba(246, 173, 85, 0.13);
+  --diagram-muted: #4a5368;
 }
 
 * {
