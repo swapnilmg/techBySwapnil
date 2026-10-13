@@ -5,7 +5,8 @@
 // { type: "image" | "pdf", src, alt, thumbnail?, fit? }. An optional top-level
 // `logo` shows next to the title - prefer a self-hosted path under
 // static/activities/<activity-id>/ over an external URL, which can rot or
-// (for signed CDN links) expire outright.
+// (for signed CDN links) expire outright. Set `date.pending: true` when dates
+// aren't announced yet so the entry still shows as upcoming on the home page.
 const activities = [
   {
     id: 'hackohio-2026',
@@ -36,10 +37,12 @@ const activities = [
     name: 'UnivaBio',
     edition: '2026',
     // Judging dates not announced yet; dated by the Oct 6 submission close so
-    // the entry sorts correctly. Update start/end/label once judging is set.
+    // the entry sorts correctly. `pending` keeps it in the home page's Upcoming
+    // list. Update start/end/label and drop `pending` once judging is set.
     date: {
       start: '2026-10-06',
-      label: 'Oct 2026'
+      label: 'Oct 2026',
+      pending: true
     },
     format: 'Online',
     description:

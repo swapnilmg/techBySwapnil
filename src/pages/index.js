@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Link, graphql } from 'gatsby'
 import Layout from '../components/layout'
 import Seo from '../components/seo'
+import UpcomingActivities from '../components/upcoming-activities'
 import * as styles from './index.module.css'
 
 const IndexPage = ({ data }) => {
@@ -12,6 +13,8 @@ const IndexPage = ({ data }) => {
         I write about engineering judgment, code reviews, distributed systems,
         and GenAI agents. <Link to="/about">More about me →</Link>
       </p>
+
+      <UpcomingActivities />
 
       <section aria-labelledby="recent-posts-heading">
         <h2 id="recent-posts-heading" className={styles.sectionHeading}>
