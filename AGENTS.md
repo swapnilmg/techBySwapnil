@@ -143,11 +143,21 @@ All components take `title` (2–4 words, shown as a small uppercase label) and 
 
 Components don't render outside this site, so cross-posted versions use images of every figure, hosted on this site.
 
-1. Export the component figures: `npm run clean && npm run build && npm run serve`, then `python3 scripts/export-figures.py <slug>` (first time only: `pip install playwright && python3 -m playwright install chromium`). This writes 2x light-mode PNGs, without captions, to `static/blog-figures/<slug>/`. It also prints dev.to-ready markdown for every figure in post order (image, then the caption in italics), including `<Diagram>` images.
+1. Export the component figures: `npm run clean && npm run build && npm run serve`, then `python3 scripts/export-figures.py <slug>` (first time only: `pip install playwright && python3 -m playwright install chromium`). This writes 2x light-mode PNGs, without captions, to `static/blog-figures/<slug>/`, and copies the post's cover there too. It also prints the cover URL and dev.to-ready markdown for every figure in post order (image, then the caption in italics), including `<Diagram>` images.
 2. Commit the PNGs and merge, so the images are live at `https://swapnilgaikwad.me/blog-figures/<slug>/...` before the cross-post links to them.
 3. In the cross-posted markdown, replace each figure with its printed snippet, in the same place as on the site.
 4. The cross-post's canonical URL is this site's post URL, and the site post ends with an "Also published on dev.to" line and carries `original_url` (see "Cross-posted content" in the Architecture section of `CLAUDE.md`).
 5. Whenever a figure changes, re-run the export, commit the PNGs, and the cross-post updates itself, because it links to the same URLs.
+6. Use the same cover on the cross-post. `static/_headers` lets other sites fetch `/blog-figures/*`, so the cover can be attached in the dev.to editor straight from its URL on this site.
+
+### Cover images
+
+Every post has a cover so posts look like a set on the blog index, in link previews, and on dev.to.
+
+- **Where:** `blog/<slug>/cover.png`, set as `hero_image: "./cover.png"` with a `hero_image_alt` that describes the picture.
+- **Size:** 1536×672 PNG. dev.to crops covers to about 1000×420, so keep everything important in the middle 1400×600.
+- **Style:** match the existing covers. Dark navy background, two neon-blue horizontal rails, a faint perspective grid, and thin amber streaks. In the middle, flat coloured blocks (blue, cyan, salmon) wired with white arrows into one glowing central motif that stands for the post's idea. Retro outline monitors sit in two corners. No text and no logos, so titles never clash.
+- **Making one:** build it as an SVG or HTML scene in that style and render it to PNG, or draw it in a design tool and export at that size. Compare it side by side with an existing cover before committing.
 
 ### Before you commit a post with diagrams
 
