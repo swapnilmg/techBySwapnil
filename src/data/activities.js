@@ -68,21 +68,25 @@ const activities = [
     location: 'Technische Universität Berlin, Germany',
     description:
       'Conducted under IEEE Conference ID #71006 and sponsored by the World Research Union (WRU) and the London College of Applied Research and Education (LCARE). It brings together researchers, industry leaders, and practitioners across innovation, technology, and engineering.',
-    url: 'https://wrunion.org',
-    linkLabel: 'Organizer website',
+    url: 'https://gicite.com/',
+    linkLabel: 'Conference website',
+    logo: 'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,fit=crop/rIkK0kfFHVgUh9kC/gicite-logo-WyfHMbE1gjLDduJh.jpg',
     roles: [
       {
         title: 'Technical Advisory Committee Member',
+        url: 'https://gicite.com/people',
         photos: [],
         certificates: []
       },
       {
         title: 'Session Chair',
+        url: 'https://gicite.com/people',
         photos: [],
         certificates: []
       },
       {
         title: 'Invited Talk (Virtual)',
+        url: 'https://gicite.com/speakers',
         photos: [],
         certificates: []
       }
