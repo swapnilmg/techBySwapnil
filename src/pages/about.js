@@ -274,7 +274,7 @@ export const query = graphql`
 export const Head = () => (
   <Seo
     title="About Me"
-    description="Learn about Swapnil Gaikwad, Senior Software Engineer at Amazon. Technical leader specializing in distributed systems architecture, cross-team leadership, and building scalable cloud-native solutions that serve millions globally."
+    description="Swapnil Gaikwad is a Senior Software Development Engineer at Amazon, leading large-scale distributed systems for payments and monetization."
     canonical="/about/"
   >
     <JsonLd data={personSchema()} />
