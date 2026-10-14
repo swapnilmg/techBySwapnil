@@ -7,7 +7,13 @@ import { graphql, useStaticQuery } from 'gatsby'
  * `canonical` and `image` accept either a path (`/blog/foo/`) or an absolute
  * URL; paths are resolved against `siteMetadata.siteUrl` because both
  * `rel=canonical` and `og:image` require absolute URLs.
+ *
+ * Pages without their own `image` fall back to `static/og-default.png`
+ * (1200×630), so every shared link gets a preview card.
  */
+const DEFAULT_IMAGE = '/og-default.png'
+const DEFAULT_IMAGE_ALT = 'Swapnil Gaikwad: engineering judgment, distributed systems, and GenAI agents'
+
 const Seo = ({ title, description, canonical, image, imageAlt, children }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -25,7 +31,8 @@ const Seo = ({ title, description, canonical, image, imageAlt, children }) => {
     !url || /^https?:\/\//.test(url) ? url : `${siteUrl}${url.startsWith('/') ? '' : '/'}${url}`
 
   const canonicalUrl = toAbsolute(canonical)
-  const imageUrl = toAbsolute(image)
+  const imageUrl = toAbsolute(image || DEFAULT_IMAGE)
+  const imageAltText = image ? imageAlt : DEFAULT_IMAGE_ALT
   const fullTitle = `${title} | ${siteTitle}`
 
   return (
@@ -44,7 +51,10 @@ const Seo = ({ title, description, canonical, image, imageAlt, children }) => {
       <meta name="twitter:title" content={fullTitle} />
       {description && <meta name="twitter:description" content={description} />}
       {imageUrl && <meta name="twitter:image" content={imageUrl} />}
-      {imageUrl && imageAlt && <meta name="twitter:image:alt" content={imageAlt} />}
+      {!image && <meta property="og:image:width" content="1200" />}
+      {!image && <meta property="og:image:height" content="630" />}
+      {imageAltText && <meta property="og:image:alt" content={imageAltText} />}
+      {imageAltText && <meta name="twitter:image:alt" content={imageAltText} />}
 
       {children}
     </>
