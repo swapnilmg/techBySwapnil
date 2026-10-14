@@ -2,6 +2,7 @@ import * as React from 'react'
 import { graphql } from 'gatsby'
 import Layout from '../components/layout'
 import Seo from '../components/seo'
+import { JsonLd, personSchema } from '../components/structured-data'
 import * as styles from './about.module.css'
 
 // Data structures
@@ -275,7 +276,9 @@ export const Head = () => (
     title="About Me"
     description="Learn about Swapnil Gaikwad, Senior Software Engineer at Amazon. Technical leader specializing in distributed systems architecture, cross-team leadership, and building scalable cloud-native solutions that serve millions globally."
     canonical="/about/"
-  />
+  >
+    <JsonLd data={personSchema()} />
+  </Seo>
 )
 
 export default AboutPage

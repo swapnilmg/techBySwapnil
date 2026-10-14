@@ -122,7 +122,7 @@ const activities = [
             type: 'pdf',
             src: '/activities/icieee-2026/technical-advisor-certificate.pdf',
             thumbnail:
-              '/activities/icieee-2026/technical-advisor-certificate.png',
+              '/activities/icieee-2026/technical-advisor-certificate.webp',
             alt: 'ICIEEE 2026 Advisory Committee certificate of appreciation'
           }
         ]
@@ -135,7 +135,7 @@ const activities = [
           {
             type: 'pdf',
             src: '/activities/icieee-2026/session-chair-certificate.pdf',
-            thumbnail: '/activities/icieee-2026/session-chair-certificate.png',
+            thumbnail: '/activities/icieee-2026/session-chair-certificate.webp',
             alt: 'ICIEEE 2026 Session Chair certificate of appreciation'
           }
         ]
@@ -148,7 +148,7 @@ const activities = [
           {
             type: 'pdf',
             src: '/activities/icieee-2026/invited-talk-certificate.pdf',
-            thumbnail: '/activities/icieee-2026/invited-talk-certificate.png',
+            thumbnail: '/activities/icieee-2026/invited-talk-certificate.webp',
             alt: 'ICIEEE 2026 Invited Speaker certificate of appreciation'
           }
         ]
@@ -183,7 +183,7 @@ const activities = [
             type: 'pdf',
             src: '/activities/bincom-hackathon-6/letter-of-appreciation.pdf',
             thumbnail:
-              '/activities/bincom-hackathon-6/letter-of-appreciation.png',
+              '/activities/bincom-hackathon-6/letter-of-appreciation.webp',
             alt: 'Bincom Hackathon 6.0 judging letter of appreciation',
             fit: 'contain'
           }
@@ -245,9 +245,9 @@ const activities = [
         certificates: [
           {
             type: 'image',
-            src: '/activities/volthacks-2026/judge-certificate.png',
+            src: '/activities/volthacks-2026/judge-certificate.webp',
             thumbnail:
-              '/activities/volthacks-2026/judge-certificate-thumbnail.png',
+              '/activities/volthacks-2026/judge-certificate-thumbnail.webp',
             alt: 'VoltHacks 2026 Judge certificate of recognition'
           }
         ]

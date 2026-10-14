@@ -27,6 +27,14 @@ module.exports = {
     "gatsby-plugin-mdx",
     "gatsby-transformer-sharp",
     {
+      // Writes /sitemap-index.xml (and /sitemap-0.xml), referenced from
+      // static/robots.txt. The 404 page is excluded so it is never indexed.
+      resolve: "gatsby-plugin-sitemap",
+      options: {
+        excludes: ["/404/", "/404.html", "/dev-404-page/"],
+      },
+    },
+    {
       resolve: "gatsby-plugin-feed",
       options: {
         query: `
