@@ -36,10 +36,59 @@
   margin-bottom: 1.25rem;
 }
 
-.bio p:first-child {
+/* Opening line: larger, so the page leads with one clear sentence */
+.lead {
   font-size: 1.2rem;
   font-weight: 500;
+  line-height: 1.65;
   color: var(--text);
+  margin: 0 0 1.75rem;
+}
+
+.focusHeading {
+  margin: 0 0 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Focus areas: three short cards that summarise the bio at a glance */
+.focusGrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  /* Three across when there is room, stacking on narrow screens */
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 1rem;
+  margin-bottom: 2.25rem;
+}
+
+.focusCard {
+  margin: 0;
+  padding: 1.25rem 1.25rem 1.35rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+.focusTitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.focusDescription {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-muted);
 }
 
 /* Experience section - timeline style */

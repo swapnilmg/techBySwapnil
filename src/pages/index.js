@@ -8,11 +8,12 @@ import * as styles from './index.module.css'
 
 const IndexPage = ({ data }) => {
   return (
-    <Layout pageTitle="Notes on distributed systems, architecture, and scale">
+    <Layout pageTitle="Notes on building AI for the enterprise">
       <p className={styles.intro}>
-        I'm Swapnil Gaikwad, a Senior Software Development Engineer at Amazon.
-        I write about engineering judgment, code reviews, distributed systems,
-        and GenAI agents. <Link to="/about">More about me →</Link>
+        I'm Swapnil Gaikwad, a Senior Software Development Engineer at Amazon,
+        building GenAI agents for enterprise workflows. I write about AI agents,
+        engineering judgment, code reviews, and the distributed systems
+        underneath it all. <Link to="/about">More about me →</Link>
       </p>
 
       <UpcomingActivities />
@@ -64,7 +65,7 @@ export const query = graphql`
 export const Head = () => (
   <Seo
     title="Home"
-    description="Tech by Swapnil: notes on engineering judgment, code reviews, distributed systems, and GenAI agents, written by Swapnil Gaikwad."
+    description="Tech by Swapnil: notes on building enterprise AI agents, engineering judgment, code reviews, and distributed systems, by Swapnil Gaikwad."
     canonical="/"
   >
     <JsonLd data={personSchema()} />

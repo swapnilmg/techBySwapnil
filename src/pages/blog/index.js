@@ -59,7 +59,7 @@ export const query = graphql`
 export const Head = () => (
   <Seo
     title="My Blog Posts"
-    description="Posts on engineering judgment, code reviews, distributed systems, and GenAI agents."
+    description="Posts on enterprise AI agents, engineering judgment, code reviews, and distributed systems."
     canonical="/blog/"
   />
 )
