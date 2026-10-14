@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Link, graphql } from 'gatsby'
 import Layout from '../components/layout'
 import Seo from '../components/seo'
+import { JsonLd, personSchema } from '../components/structured-data'
 import UpcomingActivities from '../components/upcoming-activities'
 import * as styles from './index.module.css'
 
@@ -65,7 +66,9 @@ export const Head = () => (
     title="Home"
     description="Tech by Swapnil: notes on engineering judgment, code reviews, distributed systems, and GenAI agents, written by Swapnil Gaikwad."
     canonical="/"
-  />
+  >
+    <JsonLd data={personSchema()} />
+  </Seo>
 )
 
 export default IndexPage

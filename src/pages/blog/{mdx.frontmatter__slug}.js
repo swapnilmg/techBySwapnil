@@ -4,6 +4,7 @@ import { MDXProvider } from '@mdx-js/react'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import Layout from '../../components/layout'
 import Seo from '../../components/seo'
+import { JsonLd, blogPostingSchema } from '../../components/structured-data'
 import Callout from '../../components/callout'
 import diagrams from '../../components/diagrams'
 import * as styles from './blog.module.css'
@@ -62,6 +63,7 @@ export const query = graphql`
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
+        datePublished: date(formatString: "YYYY-MM-DD")
         slug
         description
         tags
@@ -83,15 +85,29 @@ export const query = graphql`
 
 export const Head = ({ data }) => {
   const { frontmatter } = data.mdx
+  // Posts are canonical here by default; dev.to cross-posts should point back.
+  const canonical = frontmatter.canonical_url || `/blog/${frontmatter.slug}/`
+  const image = frontmatter.hero_image && frontmatter.hero_image.publicURL
   return (
     <Seo
       title={frontmatter.title}
       description={frontmatter.description}
-      // Posts are canonical here by default; dev.to cross-posts should point back.
-      canonical={frontmatter.canonical_url || `/blog/${frontmatter.slug}/`}
-      image={frontmatter.hero_image && frontmatter.hero_image.publicURL}
+      canonical={canonical}
+      image={image}
       imageAlt={frontmatter.hero_image_alt}
-    />
+    >
+      <JsonLd
+        data={blogPostingSchema({
+          title: frontmatter.title,
+          description: frontmatter.description,
+          url: canonical.startsWith('http')
+            ? canonical
+            : `https://swapnilgaikwad.me${canonical}`,
+          datePublished: frontmatter.datePublished,
+          image,
+        })}
+      />
+    </Seo>
   )
 }
 

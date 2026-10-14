@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://swapnilgaikwad.me/sitemap-index.xml
