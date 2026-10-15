@@ -23,7 +23,7 @@ const Layout = ({ pageTitle, children }) => {
                     </Link>
                     <ThemeToggle />
                 </div>
-                <p className={styles.tagline}>Distributed systems & scale</p>
+                <p className={styles.tagline}>Enterprise AI on systems built to scale</p>
                 <nav>
                     <ul className={styles.navLinks}>
                         <li>

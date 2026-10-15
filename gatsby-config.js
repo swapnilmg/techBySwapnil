@@ -11,7 +11,7 @@ module.exports = {
   siteMetadata: {
     title: "Swapnil Gaikwad",
     description:
-      "Notes on engineering judgment, code reviews, distributed systems, and GenAI agents, written by Swapnil Gaikwad.",
+      "Notes on building enterprise AI agents, engineering judgment, code reviews, and distributed systems, written by Swapnil Gaikwad.",
     siteUrl: "https://swapnilgaikwad.me",
   },
   plugins: [

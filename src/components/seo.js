@@ -12,7 +12,7 @@ import { graphql, useStaticQuery } from 'gatsby'
  * (1200×630), so every shared link gets a preview card.
  */
 const DEFAULT_IMAGE = '/og-default.png'
-const DEFAULT_IMAGE_ALT = 'Swapnil Gaikwad: engineering judgment, distributed systems, and GenAI agents'
+const DEFAULT_IMAGE_ALT = 'Swapnil Gaikwad: enterprise AI agents, engineering judgment, and the systems underneath'
 
 const Seo = ({ title, description, canonical, image, imageAlt, children }) => {
   const data = useStaticQuery(graphql`

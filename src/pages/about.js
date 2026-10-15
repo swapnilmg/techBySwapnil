@@ -13,11 +13,12 @@ const experiences = [
     period: "2020 — Present",
     description: [
       "Technical leader driving architectural vision for Amazon Currency Converter for Sellers (ACCS), leading cross-functional initiatives that rearchitected and expanded the product across international markets",
+      "Leading a GenAI agent-based initiative for enterprise accounting onboarding, using narrow, bounded agents and designed-in human checkpoints to compress a process of up to six months toward three weeks",
       "Architected and delivered a generic monetization framework supporting end-to-end fee lifecycle, establishing technical standards that reduced launch times by 83% and KTLO costs by 64%",
       "Led system architecture redesign for ACCS payment product enabling rapid international expansion, reducing time to market by 80% through scalable, reusable design patterns",
       "Provide technical leadership and mentorship across 3 teams with 18 engineers and 3 managers, fostering engineering excellence and developing 7 engineers to next-level roles"
     ],
-    technologies: ["Java", "AWS", "Spring Boot", "DynamoDB", "PostgreSQL"]
+    technologies: ["Generative AI", "Java", "AWS", "Spring Boot", "DynamoDB", "PostgreSQL"]
   },
   {
     company: "NASA Ames Research Center",
@@ -56,6 +57,14 @@ const experiences = [
 
 const publications = [
   {
+    title: "Agentic AI for Autonomous Decision Systems",
+    venue: "CISCom 2026 (Second International Conference on Computational Intelligence and Soft Computing), Track 15, Paper ID 37",
+    date: null,
+    status: "In Press",
+    url: null,
+    description: "Co-authored with Rajkumar Kuppuswami (primary), Swapnil Gaikwad, and others. Camera-ready version in progress."
+  },
+  {
     title: "Data Structure for Efficient Line of Sight Queries",
     venue: "CIKM 2018",
     date: "October 2018",
@@ -68,18 +77,14 @@ const publications = [
     date: "May 2017",
     url: "/papers/2017-optimal-constrained-wireless-emergency-network-antenna-placement.pdf",
     description: "Communication is paramount during emergencies. This research proposes a framework for identifying optimal placement of wireless network antennas within a city, given multiple criteria constraints."
-  },
-  {
-    title: "Agentic AI for Autonomous Decision Systems",
-    venue: "CISCom 2026 (Second International Conference on Computational Intelligence and Soft Computing), Track 15, Paper ID 37",
-    date: null,
-    status: "In Press",
-    url: null,
-    description: "Co-authored with Rajkumar Kuppuswami (primary), Swapnil Gaikwad, and others. Camera-ready version in progress."
   }
 ]
 
 const skills = [
+  {
+    category: "AI Applications",
+    skills: ["GenAI Agents", "Agentic Workflows", "Human-in-the-Loop Design", "Agent Evaluation", "Prompt & Context Engineering"]
+  },
   {
     category: "Architecture & Leadership",
     skills: ["Distributed Systems", "System Design", "Technical Strategy", "Cross-Team Leadership", "Mentorship"]
@@ -98,6 +103,21 @@ const skills = [
   }
 ]
 
+const focusAreas = [
+  {
+    title: "Enterprise AI agents",
+    description: "GenAI agents for judgment-heavy business workflows, with human checkpoints designed in rather than bolted on."
+  },
+  {
+    title: "Payments & monetization platforms",
+    description: "Large-scale distributed systems for payments and fees, built to launch fast and stay reliable."
+  },
+  {
+    title: "Research & community",
+    description: "Published work on optimization and agentic AI, plus conference talks, committees, and hackathon judging."
+  }
+]
+
 const AboutPage = ({ data }) => {
   const writingPosts = data.allDevToArticle.nodes
   return (
@@ -106,29 +126,46 @@ const AboutPage = ({ data }) => {
       {/* Bio Section */}
       <section className={styles.section} aria-labelledby="bio-heading">
         <h2 id="bio-heading" className={styles.srOnly}>About</h2>
+        <p className={styles.lead}>
+          I'm Swapnil Gaikwad, a Senior Software Development Engineer at Amazon. I build AI
+          applications for the enterprise: GenAI agents that take on judgment-heavy business
+          workflows, running on the kind of large-scale payment and monetization systems I've
+          spent years designing and leading.
+        </p>
+
+        <h3 id="focus-heading" className={styles.focusHeading}>What I work on</h3>
+        <ul className={styles.focusGrid} aria-labelledby="focus-heading">
+          {focusAreas.map(area => (
+            <li key={area.title} className={styles.focusCard}>
+              <h4 className={styles.focusTitle}>{area.title}</h4>
+              <p className={styles.focusDescription}>{area.description}</p>
+            </li>
+          ))}
+        </ul>
+
         <div className={styles.bio}>
           <p>
-            Hi, I'm Swapnil Gaikwad, a Senior Software Development Engineer at Amazon where I architect 
-            and lead the development of large-scale distributed systems that power critical payment and 
-            monetization infrastructure. My work spans technical leadership across multiple teams, driving 
-            architectural decisions that impact millions of sellers globally while ensuring systems remain 
-            scalable, resilient, and performant.
+            I'm the technical lead for Amazon Currency Converter for Sellers (ACCS), a global payments
+            and monetization platform. My current focus is a GenAI agent-based initiative for enterprise
+            accounting onboarding, a process that can take up to six months. Instead of one large agent,
+            it uses narrow, bounded agents and deliberately placed human checkpoints, aiming to bring
+            that time down toward three weeks. The idea behind it applies well beyond accounting: map
+            where the judgment in a workflow actually lives, automate around it, and keep people where
+            a wrong call is expensive to undo.
           </p>
           <p>
-            I hold a Master's degree in Computer Science from San Jose State University, where I 
-            specialized in optimization algorithms and wireless network systems. My academic research 
-            led to publications in IEEE and CIKM conferences, focusing on large-scale optimization 
-            problems for emergency communication networks. This foundation in both theoretical computer 
-            science and practical systems engineering shapes my approach to solving complex technical 
-            challenges—from designing fault-tolerant architectures to optimizing system performance at scale.
+            The thread goes back further. At NASA Ames Research Center I built software for the
+            Tailored Arrival Manager, an autonomous, trajectory-based air traffic system developed with
+            Boeing and the FAA. My Master's research in Computer Science at San Jose State University,
+            on large-scale optimization for emergency wireless networks, led to papers at IEEE and ACM
+            CIKM, and I recently co-authored <em>Agentic AI for Autonomous Decision Systems</em> (CISCom 2026).
           </p>
           <p>
-            Throughout my career, I've focused on translating business needs into pragmatic technical 
-            solutions while mentoring engineers and fostering a culture of technical excellence. I'm 
-            passionate about building systems that not only solve today's problems but are architected 
-            to evolve with future needs. When I'm not designing distributed systems or reviewing 
-            architectural proposals, you'll find me sharing knowledge through writing, exploring emerging 
-            technologies, or enjoying the outdoors.
+            I believe the only way to build fast is to build right, so I care as much about the
+            architecture, evaluation, and review practices around an AI system as about the model inside
+            it. Beyond my day job, I write about engineering judgment and GenAI agents, speak and serve on
+            committees at technical conferences, judge hackathons, and mentor engineers. Away from the
+            keyboard, you'll usually find me outdoors.
           </p>
         </div>
       </section>
@@ -274,7 +311,7 @@ export const query = graphql`
 export const Head = () => (
   <Seo
     title="About Me"
-    description="Swapnil Gaikwad is a Senior Software Development Engineer at Amazon, leading large-scale distributed systems for payments and monetization."
+    description="Swapnil Gaikwad is a Senior Software Development Engineer at Amazon, building enterprise GenAI agents on large-scale payment and monetization systems."
     canonical="/about/"
   >
     <JsonLd data={personSchema()} />

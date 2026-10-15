@@ -17,6 +17,7 @@ export const PERSON = {
   jobTitle: 'Senior Software Development Engineer',
   worksFor: { '@type': 'Organization', name: 'Amazon' },
   alumniOf: { '@type': 'CollegeOrUniversity', name: 'San Jose State University' },
+  knowsAbout: ['Enterprise AI', 'GenAI agents', 'Agentic AI', 'Distributed systems', 'Payments platforms'],
   sameAs: [
     'https://www.linkedin.com/in/gaikwadswapnil/',
     'https://github.com/swapnilmg',
