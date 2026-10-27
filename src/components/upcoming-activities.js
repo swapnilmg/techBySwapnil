@@ -91,19 +91,24 @@ const Logo = ({ logo, url, title }) => {
 const MAX_ITEMS = 4
 
 const UpcomingActivities = () => {
-  // The site is statically built, so the build-time list renders first and is
-  // re-checked against the visitor's date after mount. That drops anything
-  // that has ended since the last deploy without a hydration mismatch.
+  // The site is statically built, so "today" can't be computed the same way
+  // on the server and in the client's first render (the server's build-time
+  // "now" and the visitor's real "now" are different instants) - doing so
+  // caused a hydration mismatch that could leave a stale, build-time list on
+  // screen. Render nothing until mounted, matching null on both the server
+  // and the client's first render; the effect then sets the visitor's real
+  // date and triggers an ordinary client-side re-render.
   const [today, setToday] = React.useState(null)
 
   React.useEffect(() => {
     setToday(todayUtc())
   }, [])
 
-  const upcoming = getUpcoming(activities, today ?? todayUtc()).slice(
-    0,
-    MAX_ITEMS
-  )
+  if (today === null) {
+    return null
+  }
+
+  const upcoming = getUpcoming(activities, today).slice(0, MAX_ITEMS)
 
   if (upcoming.length === 0) {
     return null
