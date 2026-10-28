@@ -7,7 +7,57 @@
 // static/activities/<activity-id>/ over an external URL, which can rot or
 // (for signed CDN links) expire outright. Set `date.pending: true` when dates
 // aren't announced yet so the entry still shows as upcoming on the home page.
+// A role can carry an optional `detail` line (talk title, session, time).
 const activities = [
+  {
+    id: 'great-lakes-ai-week-2026',
+    type: 'conference',
+    shortName: 'Great Lakes AI Week 2026',
+    name: 'Great Lakes AI Week 2026 – AI Leadership Summit',
+    date: {
+      start: '2026-11-10',
+      end: '2026-11-12',
+      label: 'Nov 10–12, 2026'
+    },
+    location: 'Bowling Green State University & University of Toledo, Ohio',
+    description:
+      "The Midwest's AI week, hosted by the Enterprise Technology Association at BGSU and the University of Toledo: a two-day leadership conference anchoring a week of programming and AI Ready Ohio certification workshops.",
+    url: 'https://www.greatlakesaiweek.com/agenda',
+    linkLabel: 'Agenda',
+    roles: [
+      {
+        title: 'Speaker',
+        detail:
+          '"GenAI Agents for the Workflows That Actually Resist Automation" · AI Learning Lab: AI Agents (AI Ready Ohio credit) · Tue, Nov 10, 3:30–4:00 PM ET, Stage Three',
+        url: 'https://www.greatlakesaiweek.com/agenda',
+        photos: [],
+        certificates: []
+      }
+    ]
+  },
+  {
+    id: 'temsmet-2026',
+    type: 'conference',
+    shortName: 'IEEE TEMSMET 2026',
+    name:
+      '5th IEEE International Conference on Technology and Engineering Management for Societal Impact (IEEE TEMSMET 2026)',
+    date: {
+      start: '2026-10-28',
+      end: '2026-10-30',
+      label: 'Oct 28–30, 2026'
+    },
+    location: 'Symbiosis Institute of Technology, Hyderabad, India',
+    description:
+      'An IEEE conference on technology and engineering management for societal impact, hosted by Symbiosis Institute of Technology, Hyderabad.',
+    roles: [
+      {
+        title: 'Session Chair (Virtual)',
+        detail: 'Session OL-30-13 · Oct 30, 1:00–2:10 PM IST',
+        photos: [],
+        certificates: []
+      }
+    ]
+  },
   {
     id: 'hackohio-2026',
     type: 'hackathon',
@@ -82,13 +132,15 @@ const activities = [
         certificates: []
       },
       {
-        title: 'Session Chair',
+        title: 'Session Chair (Virtual)',
+        detail: 'Session 12 · Nov 7, 11:00 AM–1:00 PM CET',
         url: 'https://gicite.com/people',
         photos: [],
         certificates: []
       },
       {
         title: 'Invited Talk (Virtual)',
+        detail: 'Session 10 · Nov 7, 9:10–9:20 AM CET',
         url: 'https://gicite.com/speakers',
         photos: [],
         certificates: []

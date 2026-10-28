@@ -373,7 +373,16 @@ const ActivitiesPage = () => {
                       }`}
                     >
                       <div className={styles.roleDetails}>
-                        <h3 className={styles.roleTitle}>{role.title}</h3>
+                        <h3
+                          className={`${styles.roleTitle} ${
+                            role.detail ? styles.roleTitleWithDetail : ''
+                          }`}
+                        >
+                          {role.title}
+                        </h3>
+                        {role.detail && (
+                          <p className={styles.roleDetail}>{role.detail}</p>
+                        )}
                         {role.url && (
                           <a
                             className={styles.roleLink}
