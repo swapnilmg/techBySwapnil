@@ -190,6 +190,17 @@
   line-height: 1.4;
 }
 
+.roleTitleWithDetail {
+  min-height: 0;
+}
+
+.roleDetail {
+  margin: 0.15rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
 .roleLink {
   align-self: flex-start;
   margin-top: 0.25rem;
