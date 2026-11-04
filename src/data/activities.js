@@ -54,7 +54,15 @@ const activities = [
         title: 'Session Chair (Virtual)',
         detail: 'Session OL-30-13 · Oct 30, 1:00–2:10 PM IST',
         photos: [],
-        certificates: []
+        certificates: [
+          {
+            type: 'pdf',
+            src: '/activities/temsmet-2026/session-chair-certificate.pdf',
+            thumbnail: '/activities/temsmet-2026/session-chair-certificate.webp',
+            alt: 'IEEE TEMSMET 2026 Session Chair certificate',
+            fit: 'contain'
+          }
+        ]
       }
     ]
   },
