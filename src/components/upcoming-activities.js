@@ -125,7 +125,11 @@ const UpcomingActivities = () => {
       <ul className={styles.list}>
         {upcoming.map(activity => {
           const typeLabel =
-            activity.type === 'hackathon' ? 'Hackathon' : 'Conference'
+            activity.type === 'hackathon'
+              ? 'Hackathon'
+              : activity.type === 'journal'
+                ? 'Journal'
+                : 'Conference'
           const where = activity.location || activity.format
           const title = activity.shortName
             ? activity.shortName

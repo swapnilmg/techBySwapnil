@@ -1,5 +1,5 @@
 // Activities render in one date-sorted list. To add an entry, copy an object,
-// set type to "conference" or "hackathon", and add one or more roles. Put media
+// set type to "conference", "hackathon" or "journal", and add one or more roles. Put media
 // in static/activities/<activity-id>/ and reference it from the matching role.
 // Photos use { src, alt, thumbnail? }; certificates use
 // { type: "image" | "pdf", src, alt, thumbnail?, fit? }. An optional top-level
@@ -9,6 +9,36 @@
 // aren't announced yet so the entry still shows as upcoming on the home page.
 // A role can carry an optional `detail` line (talk title, session, time).
 const activities = [
+  {
+    id: 'jcmm-2026',
+    type: 'journal',
+    shortName: 'JCMM',
+    name: 'Journal of Computers, Mechanical and Management',
+    // Reviewing ran through 2026; dated by the certificate's issue date so
+    // the entry sorts correctly.
+    date: {
+      start: '2026-11-14',
+      label: '2026'
+    },
+    description:
+      'A peer-reviewed, open-access journal (e-ISSN 3009-075X).',
+    url: 'https://www.jcmm.co.in/',
+    linkLabel: 'Journal website',
+    roles: [
+      {
+        title: 'Peer Reviewer',
+        photos: [],
+        certificates: [
+          {
+            type: 'pdf',
+            src: '/activities/jcmm-2026/reviewer-certificate.pdf',
+            thumbnail: '/activities/jcmm-2026/reviewer-certificate.webp',
+            alt: 'Journal of Computers, Mechanical and Management reviewer recognition certificate, 2026'
+          }
+        ]
+      }
+    ]
+  },
   {
     id: 'great-lakes-ai-week-2026',
     type: 'conference',
@@ -63,6 +93,18 @@ const activities = [
             fit: 'contain'
           }
         ]
+      },
+      {
+        title: 'Reviewer',
+        photos: [],
+        certificates: [
+          {
+            type: 'pdf',
+            src: '/activities/temsmet-2026/reviewer-certificate.pdf',
+            thumbnail: '/activities/temsmet-2026/reviewer-certificate.webp',
+            alt: 'IEEE TEMSMET 2026 Reviewer certificate of appreciation'
+          }
+        ]
       }
     ]
   },
@@ -111,21 +153,42 @@ const activities = [
         title: 'Technical Advisory Committee Member',
         url: 'https://gicite.com/people',
         photos: [],
-        certificates: []
+        certificates: [
+          {
+            type: 'pdf',
+            src: '/activities/gicite-2026/advisory-committee-certificate.pdf',
+            thumbnail: '/activities/gicite-2026/advisory-committee-certificate.webp',
+            alt: 'GICITE 2026 Advisory Committee Member certificate of appreciation'
+          }
+        ]
       },
       {
         title: 'Session Chair (Virtual)',
         detail: 'Session 12 · Nov 7, 11:00 AM–1:00 PM CET',
         url: 'https://gicite.com/people',
         photos: [],
-        certificates: []
+        certificates: [
+          {
+            type: 'pdf',
+            src: '/activities/gicite-2026/session-chair-certificate.pdf',
+            thumbnail: '/activities/gicite-2026/session-chair-certificate.webp',
+            alt: 'GICITE 2026 Session Chair certificate of appreciation'
+          }
+        ]
       },
       {
         title: 'Invited Talk (Virtual)',
         detail: 'Session 10 · Nov 7, 9:10–9:20 AM CET',
         url: 'https://gicite.com/speakers',
         photos: [],
-        certificates: []
+        certificates: [
+          {
+            type: 'pdf',
+            src: '/activities/gicite-2026/invited-talk-certificate.pdf',
+            thumbnail: '/activities/gicite-2026/invited-talk-certificate.webp',
+            alt: 'GICITE 2026 Invited Speaker certificate of appreciation'
+          }
+        ]
       }
     ]
   },
@@ -245,13 +308,31 @@ const activities = [
       {
         title: 'Judge',
         photos: [],
-        certificates: []
+        certificates: [
+          {
+            type: 'image',
+            src: '/activities/hack-for-humanity-summer-2026/judge-certificate.webp',
+            thumbnail:
+              '/activities/hack-for-humanity-summer-2026/judge-certificate-thumbnail.webp',
+            alt: 'Hack for Humanity Summer 2026 Judge certificate',
+            fit: 'contain'
+          }
+        ]
       },
       {
         title: 'Mentor',
         url: 'https://hack-for-humanity-summer-26.devpost.com/',
         photos: [],
-        certificates: []
+        certificates: [
+          {
+            type: 'image',
+            src: '/activities/hack-for-humanity-summer-2026/mentor-certificate.webp',
+            thumbnail:
+              '/activities/hack-for-humanity-summer-2026/mentor-certificate-thumbnail.webp',
+            alt: 'Hack for Humanity Summer 2026 Mentor certificate',
+            fit: 'contain'
+          }
+        ]
       }
     ]
   },

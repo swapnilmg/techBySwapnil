@@ -286,8 +286,8 @@ const ActivitiesPage = () => {
   return (
     <Layout pageTitle="Activities">
       <p className={styles.intro}>
-        Professional conference service, advising, invited speaking, and
-        hackathon judging.
+        Professional conference service, advising, invited speaking, peer
+        review, and hackathon judging.
       </p>
 
       <div className={styles.activityList}>
@@ -297,7 +297,9 @@ const ActivitiesPage = () => {
           const typeLabel =
             activity.type === 'hackathon'
               ? `Hackathon · ${roleTitles.join(' & ')}`
-              : 'Conference'
+              : activity.type === 'journal'
+                ? 'Journal'
+                : 'Conference'
           const meta = [
             activity.date?.label,
             activity.location || activity.format
@@ -423,7 +425,7 @@ const ActivitiesPage = () => {
 export const Head = () => (
   <Seo
     title="Activities"
-    description="Professional conference service, advising, invited speaking, and hackathon judging activities by Swapnil Gaikwad."
+    description="Professional conference service, advising, invited speaking, peer review, and hackathon judging activities by Swapnil Gaikwad."
     canonical="/activities/"
   />
 )
