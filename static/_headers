@@ -1,3 +1,17 @@
+# Baseline security headers for every page and file.
+# - X-Frame-Options / frame-ancestors: other sites cannot embed these pages in
+#   a frame (clickjacking). The site itself may.
+# - X-Content-Type-Options: browsers must not guess a file's type.
+# - Referrer-Policy: other sites only learn the domain a visitor came from,
+#   not the full page URL.
+# - Permissions-Policy: the site never uses camera, microphone, location, etc.
+/*
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: frame-ancestors 'self'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+
 /*.pdf
   Content-Disposition: inline
 
