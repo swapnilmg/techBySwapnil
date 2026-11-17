@@ -10,6 +10,40 @@
 // A role can carry an optional `detail` line (talk title, session, time).
 const activities = [
   {
+    id: 'ariia-2026',
+    type: 'conference',
+    shortName: 'ARIIA 2026',
+    name:
+      '2nd International Conference on Augmented Reality, Intelligent Systems & Industrial Automation (ARIIA 2026)',
+    date: {
+      start: '2026-12-18',
+      end: '2026-12-19',
+      label: 'Dec 18–19, 2026'
+    },
+    location: 'Dayananda Sagar University, Bengaluru, India',
+    description:
+      'A conference on augmented reality, intelligent systems, robotics, and industrial automation, hosted by Dayananda Sagar University, Bengaluru.',
+    url: 'https://www.ariia.in/',
+    linkLabel: 'Conference website',
+    roles: [
+      {
+        title: 'International Advisory Committee Member',
+        photos: [],
+        certificates: []
+      },
+      {
+        title: 'Session Chair (Virtual)',
+        photos: [],
+        certificates: []
+      },
+      {
+        title: 'Invited Talk (Virtual)',
+        photos: [],
+        certificates: []
+      }
+    ]
+  },
+  {
     id: 'jcmm-2026',
     type: 'journal',
     shortName: 'JCMM',
@@ -72,9 +106,9 @@ const activities = [
     name:
       '5th IEEE International Conference on Technology and Engineering Management for Societal Impact (IEEE TEMSMET 2026)',
     date: {
-      start: '2026-10-28',
-      end: '2026-10-30',
-      label: 'Oct 28–30, 2026'
+      start: '2026-10-29',
+      end: '2026-10-31',
+      label: 'Oct 29–31, 2026'
     },
     location: 'Symbiosis Institute of Technology, Hyderabad, India',
     description:
@@ -189,6 +223,11 @@ const activities = [
             alt: 'GICITE 2026 Invited Speaker certificate of appreciation'
           }
         ]
+      },
+      {
+        title: 'Technical Reviewer',
+        photos: [],
+        certificates: []
       }
     ]
   },
